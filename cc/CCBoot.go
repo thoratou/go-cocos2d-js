@@ -4,14 +4,31 @@ package cc
 import (
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/thoratou/go-cocos2d-js/cc/core/platform/view"
+	"github.com/thoratou/go-cocos2d-js/cc/core/scenes"
 )
 
 var (
-	pcc = js.Global.Get("cc")
+	pcc                              = js.Global.Get("cc")
+	pview        *view.EGLView       = nil
+	ploaderScene *scenes.LoaderScene = nil
 )
 
+//View returns the cc.view singleton instance.
+//its specific implementqtion works as cc.view is a fully initialized singleton.
 func View() *view.EGLView {
-	return &view.EGLView{pcc.Get("view")}
+	if pview == nil {
+		pview = &view.EGLView{pcc.Get("view")}
+	}
+	return pview
+}
+
+//LoaderScene returns the cc.view singleton instance.
+//its specific implementation works as cc.view is a fully initialized singleton.
+func LoaderScene() *scenes.LoaderScene {
+	if ploaderScene == nil {
+		ploaderScene = &scenes.LoaderScene{pcc.Get("LoaderScene")}
+	}
+	return ploaderScene
 }
 
 //func NewElement(name string) js.Object {
