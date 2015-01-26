@@ -1,5 +1,5 @@
 // Package cc provides all high level functions and structures for interacting with Cocos native JavaScript APIs.
-package cc
+package view
 
 import (
 	"github.com/gopherjs/gopherjs/js"
@@ -36,7 +36,7 @@ func (v *EGLView) SetTargetDensityDPI(densityDPI string) {
 
 // GetTargetDensityDPI returns the current target-densitydpi value of cc.view.
 func (v *EGLView) GetTargetDensityDPI() string {
-	return v.Call("setTargetDensityDPI").String()
+	return v.Call("getTargetDensityDPI").String()
 }
 
 // ResizeWithBrowserSize sets whether resize canvas automatically when browser's size changed.

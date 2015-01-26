@@ -3,15 +3,15 @@ package cc
 
 import (
 	"github.com/gopherjs/gopherjs/js"
-	platform "github.com/thoratou/go-cocos2d-js/cc/core/platform"
+	"github.com/thoratou/go-cocos2d-js/cc/core/platform/view"
 )
 
 var (
 	pcc = js.Global.Get("cc")
 )
 
-func View() *platform.EGLView {
-	return &platform.EGLView{pcc.Get("view")}
+func View() *view.EGLView {
+	return &view.EGLView{pcc.Get("view")}
 }
 
 //func NewElement(name string) js.Object {
