@@ -1,32 +1,29 @@
-// Package cc provides all high level functions and structures for interacting with Cocos native JavaScript APIs.
 package cc
 
 import (
 	"github.com/gopherjs/gopherjs/js"
-	"github.com/thoratou/go-cocos2d-js/cc/core/platform/view"
-	"github.com/thoratou/go-cocos2d-js/cc/core/scenes"
 )
 
 var (
-	pcc                              = js.Global.Get("cc")
-	pview        *view.EGLView       = nil
-	ploaderScene *scenes.LoaderScene = nil
+	pcc                       = js.Global.Get("cc")
+	pview        *eGLView     = nil
+	ploaderScene *loaderScene = nil
 )
 
 //View returns the cc.view singleton instance.
 //its specific implementqtion works as cc.view is a fully initialized singleton.
-func View() *view.EGLView {
+func View() *eGLView {
 	if pview == nil {
-		pview = &view.EGLView{pcc.Get("view")}
+		pview = &eGLView{pcc.Get("view")}
 	}
 	return pview
 }
 
 //LoaderScene returns the cc.view singleton instance.
 //its specific implementation works as cc.view is a fully initialized singleton.
-func LoaderScene() *scenes.LoaderScene {
+func LoaderScene() *loaderScene {
 	if ploaderScene == nil {
-		ploaderScene = &scenes.LoaderScene{pcc.Get("LoaderScene")}
+		ploaderScene = &loaderScene{pcc.Get("LoaderScene")}
 	}
 	return ploaderScene
 }

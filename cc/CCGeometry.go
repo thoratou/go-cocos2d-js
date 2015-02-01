@@ -1,12 +1,7 @@
-// Package cc provides all high level functions and structures for interacting with Cocos native JavaScript APIs.
-package cocoa
+package cc
 
 import (
 	"github.com/gopherjs/gopherjs/js"
-)
-
-var (
-	pcc = js.Global.Get("cc")
 )
 
 ///////////
