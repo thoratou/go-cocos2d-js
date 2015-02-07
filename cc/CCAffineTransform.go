@@ -4,10 +4,6 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
-////////////
-// Action //
-////////////
-
 type AffineTransform interface {
 	js.Object
 	GetA() float64
@@ -93,38 +89,47 @@ func (at *affineTransform) SetTY(ty float64) {
 	at.Set("ty", ty)
 }
 
+// PointApply applies the affine transformation on a point.
 func (at *affineTransform) PointApply(p Point) Point {
 	return &point{pcc.Call("pointApplyAffineTransform", p, at)}
 }
 
+// SizeApply applies the affine transformation on a size.
 func (at *affineTransform) SizeApply(s Size) Size {
 	return &size{pcc.Call("sizeApplyAffineTransform", s, at)}
 }
 
+// RectApply applies the affine transformation on a rect.
 func (at *affineTransform) RectApply(r Rect) Rect {
 	return &rect{pcc.Call("rectApplyAffineTransform ", r, at)}
 }
 
+// Translate creates a new affine transformation with a base transformation matrix and a translation based on it.
 func (at *affineTransform) Translate(tx float64, ty float64) AffineTransform {
 	return &affineTransform{pcc.Call("affineTransformTranslate", at, tx, ty)}
 }
 
+// Scale creates a new affine transformation with a base transformation matrix and a scale based on it.
 func (at *affineTransform) Scale(sx float64, sy float64) AffineTransform {
 	return &affineTransform{pcc.Call("affineTransformScale", at, sx, sy)}
 }
 
+// Rotate creates a new affine transformation with a base transformation matrix and a rotation based on it.
 func (at *affineTransform) Rotate(anAngle float64) AffineTransform {
 	return &affineTransform{pcc.Call("affineTransformRotate", at, anAngle)}
 }
 
+// Concat concatenates a transform matrix to another and return the result:
 func (at *affineTransform) Concat(t2 AffineTransform) AffineTransform {
 	return &affineTransform{pcc.Call("affineTransformConcat", at, t2)}
 }
 
+// EqualsTo returns true if an affine transform equals to another, false otherwise.
 func (at *affineTransform) EqualsTo(t2 AffineTransform) bool {
 	return pcc.Call("affineTransformEqualToTransform", at, t2).Bool()
 }
 
+// Invert creates the invert transform of an AffineTransform object
 func (at *affineTransform) Invert() AffineTransform {
 	return &affineTransform{pcc.Call("affineTransformInvert", at)}
 }

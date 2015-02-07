@@ -104,9 +104,8 @@ type Node interface {
 	ConvertToWorldSpace(Point) Point
 	ConvertToNodeSpaceAR(Point) Point
 	ConvertToWorldSpaceAR(Point) Point
-	//TODO Touch
-	//ConvertTouchToNodeSpace(Touch) Point
-	//ConvertTouchToNodeSpaceAR(Touch) Point
+	ConvertTouchToNodeSpace(Touch) Point
+	ConvertTouchToNodeSpaceAR(Touch) Point
 	Update(float64)
 	UpdateTransform()
 	Retain()
