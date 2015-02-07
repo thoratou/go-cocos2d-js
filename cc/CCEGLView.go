@@ -118,21 +118,21 @@ func (v *eGLView) SetContentTranslateLeftTop(offsetLeft int, offsetTop int) {
 }
 
 // SetContentTranslateLeftTop sets the resolution translate on EGLView.
-func (v *eGLView) GetContentTranslateLeftTop() *Size {
+func (v *eGLView) GetContentTranslateLeftTop() Size {
 	leftTop := v.Call("getContentTranslateLeftTop")
 	left := leftTop.Get("left")
 	top := leftTop.Get("top")
 	if left != nil && top != nil {
 		return NewSize(left.Int(), top.Int())
 	}
-	return &Size{leftTop}
+	return &size{leftTop}
 }
 
 // GetFrameSize returns the frame size of the view.
 // On native platforms, it returns the screen size since the view is a fullscreen view.
 // On web, it returns the size of the canvas's outer DOM element.
-func (v *eGLView) GetFrameSize() *Size {
-	return &Size{v.Call("getFrameSize")}
+func (v *eGLView) GetFrameSize() Size {
+	return &size{v.Call("getFrameSize")}
 }
 
 // SetFrameSize sets, on native, the frame size of view.
@@ -147,13 +147,13 @@ func (v *eGLView) CenterWindow() {
 }
 
 // GetVisibleSize returns the visible area size of the view port.
-func (v *eGLView) GetVisibleSize() *Size {
-	return &Size{v.Call("getVisibleSize")}
+func (v *eGLView) GetVisibleSize() Size {
+	return &size{v.Call("getVisibleSize")}
 }
 
 // GetVisibleOrigin returns the visible origin of the view port.
-func (v *eGLView) GetVisibleOrigin() *Point {
-	return &Point{v.Call("getVisibleOrigin")}
+func (v *eGLView) GetVisibleOrigin() Point {
+	return &point{v.Call("getVisibleOrigin")}
 }
 
 // CanSetContentScaleFactor returns whether developer can set content's scale factor.
@@ -180,8 +180,8 @@ func (v *eGLView) SetDesignResolutionSize(width int, height int, resolutionPolic
 
 // GetDesignResolutionSize returns the designed size for the view.
 // Default resolution size is the same as 'getFrameSize'.
-func (v *eGLView) GetDesignResolutionSize() *Size {
-	return &Size{v.Call("getDesignResolutionSize")}
+func (v *eGLView) GetDesignResolutionSize() Size {
+	return &size{v.Call("getDesignResolutionSize")}
 }
 
 // SetViewPortInPoints sets view port rectangle with points.
@@ -200,8 +200,8 @@ func (v *eGLView) IsScissorEnabled() bool {
 }
 
 // GetScissorRect returns the current scissor rectangle.
-func (v *eGLView) GetScissorRect() *Rect {
-	return &Rect{v.Call("getScissorRect")}
+func (v *eGLView) GetScissorRect() Rect {
+	return &rect{v.Call("getScissorRect")}
 }
 
 // SetViewName sets the name of the view.
@@ -215,8 +215,8 @@ func (v *eGLView) GetViewName() string {
 }
 
 // GetViewPortRect returns the view port rectangle.
-func (v *eGLView) GetViewPortRect() *Rect {
-	return &Rect{v.Call("getViewPortRect")}
+func (v *eGLView) GetViewPortRect() Rect {
+	return &rect{v.Call("getViewPortRect")}
 }
 
 // GetScaleX returns scale factor of the horizontal direction (X axis).
@@ -236,8 +236,8 @@ func (v *eGLView) GetDevicePixelRatio() float64 {
 
 // ConvertToLocationInView the real location in view for a translation based on a related position
 // relatedPos contains the related position object including "left", "top", "width", "height" informations
-func (v *eGLView) ConvertToLocationInView(tx int, ty int, relatedPos js.Object) *Point {
-	return &Point{v.Call("convertToLocationInView", tx, ty, relatedPos)}
+func (v *eGLView) ConvertToLocationInView(tx int, ty int, relatedPos js.Object) Point {
+	return &point{v.Call("convertToLocationInView", tx, ty, relatedPos)}
 }
 
 ///////////////////////
@@ -247,7 +247,7 @@ func (v *eGLView) ConvertToLocationInView(tx int, ty int, relatedPos js.Object) 
 type ContainerStrategy interface {
 	js.Object
 	PreApply(v *eGLView)
-	Apply(v *eGLView, designedResolution *Size)
+	Apply(v *eGLView, designedResolution Size)
 	PostApply(v *eGLView)
 }
 
@@ -259,7 +259,7 @@ func (cs *containerStrategy) PreApply(v *eGLView) {
 }
 
 // Apply applies the strategy
-func (cs *containerStrategy) Apply(v *eGLView, designedResolution *Size) {
+func (cs *containerStrategy) Apply(v *eGLView, designedResolution Size) {
 	cs.Call("apply", v, designedResolution)
 }
 
@@ -285,7 +285,7 @@ var (
 type ContentStrategy interface {
 	js.Object
 	PreApply(v *eGLView)
-	Apply(v *eGLView, designedResolution *Size) js.Object
+	Apply(v *eGLView, designedResolution Size) js.Object
 	PostApply(v *eGLView)
 }
 
@@ -299,7 +299,7 @@ func (cs *contentStrategy) PreApply(v *eGLView) {
 // Apply applies the strategy
 // The return value is {scale: [scaleX, scaleY], viewport: {cc.Rect}},
 // The target view can then apply these value to itself, it's preferred not to modify directly its private variables
-func (cs *contentStrategy) Apply(v *eGLView, designedResolution *Size) js.Object {
+func (cs *contentStrategy) Apply(v *eGLView, designedResolution Size) js.Object {
 	return cs.Call("apply", v, designedResolution)
 }
 
@@ -337,7 +337,7 @@ func (rp *ResolutionPolicy) PreApply(v *eGLView) {
 // Apply applies the strategy
 // The return value is {scale: [scaleX, scaleY], viewport: {cc.Rect}},
 // The target view can then apply these value to itself, it's preferred not to modify directly its private variables
-func (rp *ResolutionPolicy) Apply(v *eGLView, designedResolution *Size) js.Object {
+func (rp *ResolutionPolicy) Apply(v *eGLView, designedResolution Size) js.Object {
 	return rp.Call("apply", v, designedResolution)
 }
 
