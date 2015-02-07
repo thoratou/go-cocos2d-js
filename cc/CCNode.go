@@ -127,11 +127,10 @@ type Node interface {
 	UpdateDisplayedOpacity(int)
 	IsCascadeOpacityEnabled() bool
 	SetCascadeOpacityEnabled(bool)
-	//TODO Color
-	//GetColor() Color
-	//GetDisplayedColor() Color
-	//SetColor(Color)
-	//UpdateDisplayedColor(Color)
+	GetColor() Color
+	GetDisplayedColor() Color
+	SetColor(Color)
+	UpdateDisplayedColor(Color)
 	IsCascadeColorEnabled() bool
 	SetCascadeColorEnabled(bool)
 	SetOpacityModifyRGB(bool)
