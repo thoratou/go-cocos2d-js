@@ -117,10 +117,9 @@ type Node interface {
 	//TODO RenderCmd
 	//Visit(RenderCmd)
 	//Transform(RenderCmd, bool)
-	//GetNodeToParentTransform() AffineTransform
-	//TODO GLProgram
-	//GetShaderProgram() GLProgram
-	//SetShaderProgram(GLProgram)
+	GetNodeToParentTransform() AffineTransform
+	GetShaderProgram() GLProgram
+	SetShaderProgram(GLProgram)
 	GetBoundingBoxToWorld() Rect
 	GetOpacity() int
 	GetDisplayedOpacity() int
