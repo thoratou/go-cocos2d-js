@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
-//The touch event class
+// The touch event class
 type Touch interface {
 	js.Object
 	GetLocation() Point

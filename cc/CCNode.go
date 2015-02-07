@@ -110,9 +110,8 @@ type Node interface {
 	UpdateTransform()
 	Retain()
 	Release()
-	//TODO Component
-	//GetComponent(string) Component
-	//AddComponent(Component)
+	GetComponent(string) Component
+	AddComponent(Component)
 	RemoveComponent(string)
 	RemoveAllComponents()
 	//TODO RenderCmd
