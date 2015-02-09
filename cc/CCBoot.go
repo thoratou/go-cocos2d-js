@@ -8,10 +8,11 @@ var (
 	pcc                       = js.Global.Get("cc")
 	pview        *eGLView     = nil
 	ploaderScene *loaderScene = nil
+	pdirector    *director    = nil
 )
 
 //View returns the cc.view singleton instance.
-//its specific implementqtion works as cc.view is a fully initialized singleton.
+//its specific implementation works as cc.view is a fully initialized singleton.
 func View() *eGLView {
 	if pview == nil {
 		pview = &eGLView{pcc.Get("view")}
@@ -20,12 +21,26 @@ func View() *eGLView {
 }
 
 //LoaderScene returns the cc.view singleton instance.
-//its specific implementation works as cc.view is a fully initialized singleton.
+//its specific implementation works as cc.LoaderScene is a fully initialized singleton.
 func LoaderScene() *loaderScene {
 	if ploaderScene == nil {
 		ploaderScene = &loaderScene{pcc.Get("LoaderScene")}
 	}
 	return ploaderScene
+}
+
+//Director returns the cc.director singleton instance.
+//its specific implementation works as cc.director is a fully initialized singleton.
+func Director() *director {
+	if pdirector == nil {
+		pdirector = &director{pcc.Get("director")}
+	}
+	return pdirector
+}
+
+//cc.winSize is the alias object for the size of the current game window.
+func WinSize() Size {
+	return Director().GetWinSize()
 }
 
 //func NewElement(name string) js.Object {
@@ -210,13 +225,25 @@ const (
 )
 
 // Onstart is the callback when the scripts of engine have been load.
-func (g *game) OnStart(cb func()) {
+func (g *game) SetOnStart(cb func()) {
+	BackupFunc(g, "onStart")
 	g.Set("onStart", cb)
 }
 
-// Onstop is the callback when the game .
-func (g *game) OnStop(cb func()) {
+// Onstart is the callback when the scripts of engine have been load.
+func (g *game) OnStart() {
+	g.Call("onStart")
+}
+
+// Onstop is the callback when the game ends.
+func (g *game) SetOnStop(cb func()) {
+	BackupFunc(g, "onStop")
 	g.Set("onStop", cb)
+}
+
+// Onstop is the callback when the game ends.
+func (g *game) OnStop() {
+	g.Call("onStop")
 }
 
 // Run runs the game.

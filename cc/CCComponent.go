@@ -7,11 +7,14 @@ import (
 // The Component class
 type Component interface {
 	js.Object
+	SetInit(func() bool)
 	Init() bool
-	InitCb(func() bool)
-	OnEnter(func())
-	OnExit(func())
-	Update(func(float64))
+	SetOnEnter(func())
+	OnEnter()
+	SetOnExit(func())
+	OnExit()
+	SetUpdate(func(float64))
+	Update(float64)
 	//TODO Serialize(func(Reader))
 	IsEnabled() bool
 	SetEnabled(bool)
@@ -29,27 +32,47 @@ func NewComponent() Component {
 }
 
 // Init initializes the component.
+func (c *component) SetInit(cb func() bool) {
+	BackupFunc(c, "init")
+	c.Set("init", cb)
+}
+
+// Init initializes the component.
 func (c *component) Init() bool {
 	return c.Call("init").Bool()
 }
 
-func (c *component) InitCb(cb func() bool) {
-	c.Set("init", cb)
-}
-
 // OnEnter is the callback when a component enter stage.
-func (c *component) OnEnter(cb func()) {
+func (c *component) SetOnEnter(cb func()) {
+	BackupFunc(c, "onEnter")
 	c.Set("onEnter", cb)
 }
 
+// OnEnter is the callback when a component enter stage.
+func (c *component) OnEnter() {
+	c.Call("onEnter")
+}
+
 // OnExit is the callback when a component exit stage.
-func (c *component) OnExit(cb func()) {
+func (c *component) SetOnExit(cb func()) {
+	BackupFunc(c, "onExit")
 	c.Set("onExit", cb)
 }
 
+// OnExit is the callback when a component exit stage.
+func (c *component) OnExit() {
+	c.Call("onExit")
+}
+
 // Update is the callback per every frame if it schedules update.
-func (c *component) Update(cb func(float64)) {
+func (c *component) SetUpdate(cb func(float64)) {
+	BackupFunc(c, "update")
 	c.Set("update", cb)
+}
+
+// Update is the callback per every frame if it schedules update.
+func (c *component) Update(dt float64) {
+	c.Call("update", dt)
 }
 
 // IsEnabled returns component whether is enabled.

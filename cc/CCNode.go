@@ -70,7 +70,10 @@ type Node interface {
 	Cleanup()
 	GetChildByTag(int) Node
 	GetChildByName(string) Node
-	AddChild(Node, int, int)
+	AddChild(Node)
+	AddChildWithOrder(Node, int)
+	AddChildWithTag(Node, int)
+	AddChildWithOrderAndTag(Node, int, int)
 	RemoveFromParent(bool)
 	RemoveChild(Node, bool)
 	RemoveChildByTag(int, bool)
@@ -78,10 +81,14 @@ type Node interface {
 	SetNodeDirty()
 	ReorderChild(Node, int)
 	SortAllChildren()
-	OnEnter(func())
-	OnEnterTransitionDidFinish(func())
-	OnExitTransitionDidStart(func())
-	OnExit(func())
+	SetOnEnter(func())
+	OnEnter()
+	SetOnEnterTransitionDidFinish(func())
+	OnEnterTransitionDidFinish()
+	SetOnExitTransitionDidStart(func())
+	OnExitTransitionDidStart()
+	SetOnExit(func())
+	OnExit()
 	RunAction(Action)
 	StopAllActions()
 	StopAction(Action)
@@ -408,7 +415,19 @@ func (n *node) GetChildByName(name string) Node {
 	return &node{n.Call("getChildByName", name)}
 }
 
-func (n *node) AddChild(child Node, localZOrder int, tag int) {
+func (n *node) AddChild(child Node) {
+	n.Call("addChild", child, js.Undefined, js.Undefined)
+}
+
+func (n *node) AddChildWithOrder(child Node, localZOrder int) {
+	n.Call("addChild", child, localZOrder, js.Undefined)
+}
+
+func (n *node) AddChildWithTag(child Node, tag int) {
+	n.Call("addChild", child, js.Undefined, tag)
+}
+
+func (n *node) AddChildWithOrderAndTag(child Node, localZOrder int, tag int) {
 	n.Call("addChild", child, localZOrder, tag)
 }
 
@@ -440,20 +459,40 @@ func (n *node) SortAllChildren() {
 	n.Call("sortAllChildren")
 }
 
-func (n *node) OnEnter(cb func()) {
+func (n *node) SetOnEnter(cb func()) {
+	BackupFunc(n, "onEnter")
 	n.Set("onEnter", cb)
 }
 
-func (n *node) OnEnterTransitionDidFinish(cb func()) {
+func (n *node) OnEnter() {
+	n.Call("onEnter")
+}
+
+func (n *node) SetOnEnterTransitionDidFinish(cb func()) {
+	BackupFunc(n, "onEnterTransitionDidFinish")
 	n.Set("onEnterTransitionDidFinish", cb)
 }
 
-func (n *node) OnExitTransitionDidStart(cb func()) {
+func (n *node) OnEnterTransitionDidFinish() {
+	n.Call("onEnterTransitionDidFinish")
+}
+
+func (n *node) SetOnExitTransitionDidStart(cb func()) {
+	BackupFunc(n, "onExitTransitionDidStart")
 	n.Set("onExitTransitionDidStart", cb)
 }
 
-func (n *node) OnExit(cb func()) {
+func (n *node) OnExitTransitionDidStart() {
+	n.Call("onExitTransitionDidStart")
+}
+
+func (n *node) SetOnExit(cb func()) {
+	BackupFunc(n, "onExit")
 	n.Set("onExit", cb)
+}
+
+func (n *node) OnExit() {
+	n.Call("onExit")
 }
 
 func (n *node) RunAction(action Action) {

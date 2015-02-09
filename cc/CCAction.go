@@ -14,8 +14,10 @@ type Action interface {
 	IsDone() bool
 	StartWithTarget(Node)
 	Stop()
-	Step(func(float64))
-	Update(func(float64))
+	SetStep(func(float64))
+	Step(float64)
+	SetUpdate(func(float64))
+	Update(float64)
 	GetTarget() Node
 	SetTarget(Node)
 	GetOriginalTarget() Node
@@ -48,12 +50,23 @@ func (a *action) StartWithTarget(target Node) {
 func (a *action) Stop() {
 	a.Call("stop")
 }
-func (a *action) Step(step func(float64)) {
+
+func (a *action) SetStep(step func(float64)) {
+	BackupFunc(a, "step")
 	a.Set("step", step)
 }
 
-func (a *action) Update(update func(float64)) {
+func (a *action) Step(dt float64) {
+	a.Call("step", dt)
+}
+
+func (a *action) SetUpdate(update func(float64)) {
+	BackupFunc(a, "update")
 	a.Set("update", update)
+}
+
+func (a *action) Update(dt float64) {
+	a.Call("update", dt)
 }
 
 func (a *action) GetTarget() Node {
