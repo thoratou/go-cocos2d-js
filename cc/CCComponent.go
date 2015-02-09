@@ -11,10 +11,13 @@ type Component interface {
 	Init() bool
 	SetOnEnter(func())
 	OnEnter()
+	OnEnterSuper()
 	SetOnExit(func())
 	OnExit()
+	OnExitSuper()
 	SetUpdate(func(float64))
 	Update(float64)
+	UpdateSuper(float64)
 	//TODO Serialize(func(Reader))
 	IsEnabled() bool
 	SetEnabled(bool)
@@ -53,6 +56,11 @@ func (c *component) OnEnter() {
 	c.Call("onEnter")
 }
 
+// OnEnter is the callback when a component enter stage.
+func (c *component) OnEnterSuper() {
+	SuperCall(c, "onEnter")
+}
+
 // OnExit is the callback when a component exit stage.
 func (c *component) SetOnExit(cb func()) {
 	BackupFunc(c, "onExit")
@@ -64,6 +72,11 @@ func (c *component) OnExit() {
 	c.Call("onExit")
 }
 
+// OnExit is the callback when a component exit stage.
+func (c *component) OnExitSuper() {
+	SuperCall(c, "onExit")
+}
+
 // Update is the callback per every frame if it schedules update.
 func (c *component) SetUpdate(cb func(float64)) {
 	BackupFunc(c, "update")
@@ -73,6 +86,11 @@ func (c *component) SetUpdate(cb func(float64)) {
 // Update is the callback per every frame if it schedules update.
 func (c *component) Update(dt float64) {
 	c.Call("update", dt)
+}
+
+// Update is the callback per every frame if it schedules update.
+func (c *component) UpdateSuper(dt float64) {
+	SuperCall(c, "update", dt)
 }
 
 // IsEnabled returns component whether is enabled.

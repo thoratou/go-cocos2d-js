@@ -44,7 +44,6 @@ func (v *eGLView) ResizeWithBrowserSize(enabled bool) {
 // so you can do any additional modifications within the callback.
 // Useful only on web.
 func (v *eGLView) SetResizeCallback(cb func()) {
-	BackupFunc(v, "setResizeCallback")
 	v.Call("setResizeCallback", cb)
 }
 

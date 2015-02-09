@@ -83,12 +83,16 @@ type Node interface {
 	SortAllChildren()
 	SetOnEnter(func())
 	OnEnter()
+	OnEnterSuper()
 	SetOnEnterTransitionDidFinish(func())
 	OnEnterTransitionDidFinish()
+	OnEnterTransitionDidFinishSuper()
 	SetOnExitTransitionDidStart(func())
 	OnExitTransitionDidStart()
+	OnExitTransitionDidStartSuper()
 	SetOnExit(func())
 	OnExit()
+	OnExitSuper()
 	RunAction(Action)
 	StopAllActions()
 	StopAction(Action)
@@ -468,6 +472,10 @@ func (n *node) OnEnter() {
 	n.Call("onEnter")
 }
 
+func (n *node) OnEnterSuper() {
+	SuperCall(n, "onEnter")
+}
+
 func (n *node) SetOnEnterTransitionDidFinish(cb func()) {
 	BackupFunc(n, "onEnterTransitionDidFinish")
 	n.Set("onEnterTransitionDidFinish", cb)
@@ -475,6 +483,10 @@ func (n *node) SetOnEnterTransitionDidFinish(cb func()) {
 
 func (n *node) OnEnterTransitionDidFinish() {
 	n.Call("onEnterTransitionDidFinish")
+}
+
+func (n *node) OnEnterTransitionDidFinishSuper() {
+	SuperCall(n, "onEnterTransitionDidFinish")
 }
 
 func (n *node) SetOnExitTransitionDidStart(cb func()) {
@@ -486,6 +498,10 @@ func (n *node) OnExitTransitionDidStart() {
 	n.Call("onExitTransitionDidStart")
 }
 
+func (n *node) OnExitTransitionDidStartSuper() {
+	SuperCall(n, "onExitTransitionDidStart")
+}
+
 func (n *node) SetOnExit(cb func()) {
 	BackupFunc(n, "onExit")
 	n.Set("onExit", cb)
@@ -493,6 +509,10 @@ func (n *node) SetOnExit(cb func()) {
 
 func (n *node) OnExit() {
 	n.Call("onExit")
+}
+
+func (n *node) OnExitSuper() {
+	SuperCall(n, "onExit")
 }
 
 func (n *node) RunAction(action Action) {

@@ -16,8 +16,10 @@ type Action interface {
 	Stop()
 	SetStep(func(float64))
 	Step(float64)
+	StepSuper(float64)
 	SetUpdate(func(float64))
 	Update(float64)
+	UpdateSuper(float64)
 	GetTarget() Node
 	SetTarget(Node)
 	GetOriginalTarget() Node
@@ -60,6 +62,10 @@ func (a *action) Step(dt float64) {
 	a.Call("step", dt)
 }
 
+func (a *action) StepSuper(dt float64) {
+	SuperCall(a, "step", dt)
+}
+
 func (a *action) SetUpdate(update func(float64)) {
 	BackupFunc(a, "update")
 	a.Set("update", update)
@@ -67,6 +73,10 @@ func (a *action) SetUpdate(update func(float64)) {
 
 func (a *action) Update(dt float64) {
 	a.Call("update", dt)
+}
+
+func (a *action) UpdateSuper(dt float64) {
+	SuperCall(a, "update", dt)
 }
 
 func (a *action) GetTarget() Node {

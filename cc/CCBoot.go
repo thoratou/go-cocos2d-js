@@ -235,6 +235,11 @@ func (g *game) OnStart() {
 	g.Call("onStart")
 }
 
+// Onstart is the callback when the scripts of engine have been load.
+func (g *game) OnStartSuper() {
+	SuperCall(g, "onStart")
+}
+
 // Onstop is the callback when the game ends.
 func (g *game) SetOnStop(cb func()) {
 	BackupFunc(g, "onStop")
@@ -244,6 +249,11 @@ func (g *game) SetOnStop(cb func()) {
 // Onstop is the callback when the game ends.
 func (g *game) OnStop() {
 	g.Call("onStop")
+}
+
+// Onstop is the callback when the game ends.
+func (g *game) OnStopSuper() {
+	SuperCall(g, "onStop")
 }
 
 // Run runs the game.
