@@ -4,6 +4,13 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
+const (
+	MENU_STATE_WAITING        = 0
+	MENU_STATE_TRACKING_TOUCH = 1
+	MENU_HANDLER_PRIORITY     = -128
+	DEFAULT_PADDING           = 5
+)
+
 type Menu interface {
 	Layer
 	//SetOnEnter(func()) defined as part of Node
