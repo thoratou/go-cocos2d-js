@@ -147,6 +147,12 @@ type Node interface {
 	SetCascadeColorEnabled(bool)
 	SetOpacityModifyRGB(bool)
 	IsOpacityModifyRGB() bool
+
+	//Attribute accessors
+	SetX(float64)
+	GetX() float64
+	SetY(float64)
+	GetY() float64
 }
 
 type node struct{ js.Object }
@@ -726,4 +732,20 @@ func (n *node) SetOpacityModifyRGB(opacityValue bool) {
 
 func (n *node) IsOpacityModifyRGB() bool {
 	return n.Call("isOpacityModifyRGB").Bool()
+}
+
+func (n *node) SetX(x float64) {
+	n.Set("x", x)
+}
+
+func (n *node) GetX() float64 {
+	return n.Get("x").Float()
+}
+
+func (n *node) SetY(y float64) {
+	n.Set("y", y)
+}
+
+func (n *node) GetY() float64 {
+	return n.Get("y").Float()
 }
