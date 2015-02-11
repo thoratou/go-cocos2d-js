@@ -147,12 +147,6 @@ type Node interface {
 	SetCascadeColorEnabled(bool)
 	SetOpacityModifyRGB(bool)
 	IsOpacityModifyRGB() bool
-
-	//Attribute accessors
-	SetX(float64)
-	GetX() float64
-	SetY(float64)
-	GetY() float64
 }
 
 type node struct{ js.Object }
