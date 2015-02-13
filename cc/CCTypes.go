@@ -10,7 +10,6 @@ import (
 
 // The Color class
 type Color interface {
-	js.Object
 	GetR() int
 	GetG() int
 	GetB() int

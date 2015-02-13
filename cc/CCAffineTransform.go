@@ -5,7 +5,6 @@ import (
 )
 
 type AffineTransform interface {
-	js.Object
 	GetA() float64
 	GetB() float64
 	GetC() float64

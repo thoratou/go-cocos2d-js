@@ -30,7 +30,6 @@ const (
 ///////////////
 
 type Scheduler interface {
-	js.Object
 	SetTimeScale(float64)
 	GetTimeScale() float64
 	Update(float64)

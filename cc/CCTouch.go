@@ -6,7 +6,6 @@ import (
 
 // The touch event class
 type Touch interface {
-	js.Object
 	GetLocation() Point
 	GetLocationX() float64
 	GetLocationY() float64

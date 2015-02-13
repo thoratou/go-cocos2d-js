@@ -10,7 +10,6 @@ import (
 
 // Point is the class for point object.
 type Point interface {
-	js.Object
 	X() int
 	Y() int
 	EqualsTo(Point) bool
@@ -44,7 +43,6 @@ func (p1 *point) EqualsTo(p2 Point) bool {
 
 // Size is the class for size object.
 type Size interface {
-	js.Object
 	Width() int
 	Height() int
 	EqualsTo(Size) bool
@@ -78,7 +76,6 @@ func (s1 *size) EqualsTo(s2 Size) bool {
 
 // Rect is the class for rectangle object.
 type Rect interface {
-	js.Object
 	X() int
 	Y() int
 	Width() int

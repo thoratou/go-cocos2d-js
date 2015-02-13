@@ -9,7 +9,6 @@ import (
 ////////////
 
 type Action interface {
-	js.Object
 	Clone() Action
 	IsDone() bool
 	StartWithTarget(Node)

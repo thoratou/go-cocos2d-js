@@ -5,7 +5,6 @@ import (
 )
 
 type Node interface {
-	js.Object
 	Init() bool
 	Attr(map[string]interface{})
 	GetSkewX() float64

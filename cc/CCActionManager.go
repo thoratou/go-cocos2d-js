@@ -8,9 +8,7 @@ import (
 // HashElement //
 /////////////////
 
-type HashElement interface {
-	js.Object
-}
+type HashElement interface{}
 type hashElement struct{ js.Object }
 
 // NewHashElement is the constructor for HashElement.
@@ -23,7 +21,6 @@ func NewHashElement() HashElement {
 ///////////////////
 
 type ActionManager interface {
-	js.Object
 	AddAction(Action, Node, bool)
 	RemoveAllActions()
 	RemoveAllActionsFromTarget(Node, bool)

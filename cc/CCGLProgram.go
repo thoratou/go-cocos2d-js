@@ -4,18 +4,13 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
-type WebGLUniformLocation interface {
-	js.Object
-}
-type WebGLProgram interface {
-	js.Object
-}
+type WebGLUniformLocation interface{}
+type WebGLProgram interface{}
 type webGLUniformLocation struct{ js.Object }
 type webGLProgram struct{ js.Object }
 
 // The Component class
 type GLProgram interface {
-	js.Object
 	DestroyProgram()
 	InitWithVertexShaderByteArray(string, string) bool
 	InitWithString(string, string) bool

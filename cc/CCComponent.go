@@ -6,7 +6,6 @@ import (
 
 // The Component class
 type Component interface {
-	js.Object
 	SetInit(func() bool)
 	Init() bool
 	SetOnEnter(func())
