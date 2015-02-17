@@ -22,7 +22,7 @@ type Color interface {
 	ToHex() string
 }
 
-type color struct{ js.Object }
+type color struct{ *js.Object }
 
 // NewColor is the constructor for Color.
 func NewColor(r, g, b, a int) Color {

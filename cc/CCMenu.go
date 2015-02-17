@@ -56,7 +56,7 @@ func NewMenuWithArray(menuItems []MenuItem) Menu {
 // During OnEnter you can't access a "sister/brother" node.
 // If you override OnEnter, you must call its parent's OnEnter function with OnEnterSuper().
 func (m *menu) SetOnEnter(cb func()) {
-	BackupFunc(m, "onEnter")
+	BackupFunc(m.Object, "onEnter")
 	m.Set("onEnter", cb)
 }
 
@@ -73,7 +73,7 @@ func (m *menu) OnEnter() {
 // During OnEnter you can't access a "sister/brother" node.
 // If you override OnEnter, you must call its parent's OnEnter function with OnEnterSuper().
 func (m *menu) OnEnterSuper() {
-	SuperCall(m, "onEnter")
+	SuperCall(m.Object, "onEnter")
 }
 
 //IsEnabled returns whether or not the menu will receive events.
@@ -162,7 +162,7 @@ func (m *menu) RemoveChild(child Node, cleanup bool) {
 // During OnExit you can't access a sibling node.
 // If you override OnExit, you shall call its parent's OnExit with OnExitSuper().
 func (m *menu) SetOnExit(cb func()) {
-	BackupFunc(m, "onExit")
+	BackupFunc(m.Object, "onExit")
 	m.Set("onExit", cb)
 }
 
@@ -179,7 +179,7 @@ func (m *menu) OnExit() {
 // During OnExit you can't access a sibling node.
 // If you override OnExit, you shall call its parent's OnExit with OnExitSuper().
 func (m *menu) OnExitSuper() {
-	SuperCall(m, "onExit")
+	SuperCall(m.Object, "onExit")
 }
 
 // only use for jsbinding

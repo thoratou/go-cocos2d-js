@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
-type loaderScene struct{ js.Object }
+type loaderScene struct{ *js.Object }
 
 // Init: contructor of cc.LoaderScene
 func (ls *loaderScene) Init() bool {

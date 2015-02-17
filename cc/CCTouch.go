@@ -19,7 +19,7 @@ type Touch interface {
 	SetTouchInfo(int, float64, float64)
 }
 
-type touch struct{ js.Object }
+type touch struct{ *js.Object }
 
 // NewTouch is the constructor for Touch.
 func NewTouch(x float64, y float64, id int) Touch {

@@ -15,7 +15,7 @@ const (
 // eGLView //
 /////////////
 
-type eGLView struct{ js.Object }
+type eGLView struct{ *js.Object }
 
 // SetTargetDensityDPI sets view's target-densitydpi for android mobile browser.
 // It can be set to:
@@ -236,7 +236,7 @@ func (v *eGLView) GetDevicePixelRatio() float64 {
 
 // ConvertToLocationInView the real location in view for a translation based on a related position
 // relatedPos contains the related position object including "left", "top", "width", "height" informations
-func (v *eGLView) ConvertToLocationInView(tx int, ty int, relatedPos js.Object) Point {
+func (v *eGLView) ConvertToLocationInView(tx int, ty int, relatedPos *js.Object) Point {
 	return &point{v.Call("convertToLocationInView", tx, ty, relatedPos)}
 }
 
@@ -245,13 +245,12 @@ func (v *eGLView) ConvertToLocationInView(tx int, ty int, relatedPos js.Object) 
 ///////////////////////
 
 type ContainerStrategy interface {
-	js.Object
 	PreApply(v *eGLView)
 	Apply(v *eGLView, designedResolution Size)
 	PostApply(v *eGLView)
 }
 
-type containerStrategy struct{ js.Object }
+type containerStrategy struct{ *js.Object }
 
 // PreApply performs manipulation before appling the strategy
 func (cs *containerStrategy) PreApply(v *eGLView) {
@@ -283,13 +282,12 @@ var (
 /////////////////////
 
 type ContentStrategy interface {
-	js.Object
 	PreApply(v *eGLView)
-	Apply(v *eGLView, designedResolution Size) js.Object
+	Apply(v *eGLView, designedResolution Size) *js.Object
 	PostApply(v *eGLView)
 }
 
-type contentStrategy struct{ js.Object }
+type contentStrategy struct{ *js.Object }
 
 // PreApply performs manipulation before appling the strategy
 func (cs *contentStrategy) PreApply(v *eGLView) {
@@ -299,7 +297,7 @@ func (cs *contentStrategy) PreApply(v *eGLView) {
 // Apply applies the strategy
 // The return value is {scale: [scaleX, scaleY], viewport: {cc.Rect}},
 // The target view can then apply these value to itself, it's preferred not to modify directly its private variables
-func (cs *contentStrategy) Apply(v *eGLView, designedResolution Size) js.Object {
+func (cs *contentStrategy) Apply(v *eGLView, designedResolution Size) *js.Object {
 	return cs.Call("apply", v, designedResolution)
 }
 
@@ -322,7 +320,7 @@ var (
 // ResolutionPolicy //
 //////////////////////
 
-type ResolutionPolicy struct{ js.Object }
+type ResolutionPolicy struct{ *js.Object }
 
 // NewResolutionPolicy creates a new ResolutionPolicy
 func NewResolutionPolicy(cs1 ContainerStrategy, cs2 ContentStrategy) *ResolutionPolicy {
@@ -337,7 +335,7 @@ func (rp *ResolutionPolicy) PreApply(v *eGLView) {
 // Apply applies the strategy
 // The return value is {scale: [scaleX, scaleY], viewport: {cc.Rect}},
 // The target view can then apply these value to itself, it's preferred not to modify directly its private variables
-func (rp *ResolutionPolicy) Apply(v *eGLView, designedResolution Size) js.Object {
+func (rp *ResolutionPolicy) Apply(v *eGLView, designedResolution Size) *js.Object {
 	return rp.Call("apply", v, designedResolution)
 }
 

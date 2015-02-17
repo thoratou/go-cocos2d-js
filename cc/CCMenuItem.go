@@ -15,17 +15,17 @@ type MenuItem interface {
 	//IsOpacityModifyRGB() bool defined as part of Node
 	IsEnabled() bool
 	SetEnabled(bool)
-	InitWithCallback(func(js.Object), Node) bool
+	InitWithCallback(func(*js.Object), Node) bool
 	Rect() Rect
 	Selected()
 	Unselected()
-	SetCallback(func(js.Object), Node)
+	SetCallback(func(*js.Object), Node)
 	Activate()
 }
 
 type menuItem struct{ node }
 
-func NewMenuItem(callback func(js.Object), target Node) MenuItem {
+func NewMenuItem(callback func(*js.Object), target Node) MenuItem {
 	return &menuItem{node{pcc.Get("MenuItem").New(callback, target)}}
 }
 
@@ -49,7 +49,7 @@ func (mi *menuItem) SetEnabled(enable bool) {
 	mi.Call("setEnabled", enable)
 }
 
-func (mi *menuItem) InitWithCallback(callback func(js.Object), target Node) bool {
+func (mi *menuItem) InitWithCallback(callback func(*js.Object), target Node) bool {
 	return mi.Call("isEnabled", callback, target).Bool()
 }
 
@@ -65,7 +65,7 @@ func (mi *menuItem) Unselected() {
 	mi.Call("unselected")
 }
 
-func (mi *menuItem) SetCallback(callback func(js.Object), target Node) {
+func (mi *menuItem) SetCallback(callback func(*js.Object), target Node) {
 	mi.Call("setCallback", callback, target)
 }
 

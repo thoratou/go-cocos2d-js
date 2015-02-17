@@ -22,11 +22,11 @@ type Component interface {
 	SetEnabled(bool)
 	GetName() string
 	SetName(string)
-	SetOwner(js.Object)
-	GetOwner() js.Object
+	SetOwner(*js.Object)
+	GetOwner() *js.Object
 }
 
-type component struct{ js.Object }
+type component struct{ *js.Object }
 
 // NewComponent is the constructor for Component.
 func NewComponent() Component {
@@ -35,7 +35,7 @@ func NewComponent() Component {
 
 // Init initializes the component.
 func (c *component) SetInit(cb func() bool) {
-	BackupFunc(c, "init")
+	BackupFunc(c.Object, "init")
 	c.Set("init", cb)
 }
 
@@ -44,9 +44,14 @@ func (c *component) Init() bool {
 	return c.Call("init").Bool()
 }
 
+// Init initializes the component.
+func (c *component) InitSuper() bool {
+	return SuperCall(c.Object, "init").Bool()
+}
+
 // OnEnter is the callback when a component enter stage.
 func (c *component) SetOnEnter(cb func()) {
-	BackupFunc(c, "onEnter")
+	BackupFunc(c.Object, "onEnter")
 	c.Set("onEnter", cb)
 }
 
@@ -57,12 +62,12 @@ func (c *component) OnEnter() {
 
 // OnEnter is the callback when a component enter stage.
 func (c *component) OnEnterSuper() {
-	SuperCall(c, "onEnter")
+	SuperCall(c.Object, "onEnter")
 }
 
 // OnExit is the callback when a component exit stage.
 func (c *component) SetOnExit(cb func()) {
-	BackupFunc(c, "onExit")
+	BackupFunc(c.Object, "onExit")
 	c.Set("onExit", cb)
 }
 
@@ -73,12 +78,12 @@ func (c *component) OnExit() {
 
 // OnExit is the callback when a component exit stage.
 func (c *component) OnExitSuper() {
-	SuperCall(c, "onExit")
+	SuperCall(c.Object, "onExit")
 }
 
 // Update is the callback per every frame if it schedules update.
 func (c *component) SetUpdate(cb func(float64)) {
-	BackupFunc(c, "update")
+	BackupFunc(c.Object, "update")
 	c.Set("update", cb)
 }
 
@@ -89,7 +94,7 @@ func (c *component) Update(dt float64) {
 
 // Update is the callback per every frame if it schedules update.
 func (c *component) UpdateSuper(dt float64) {
-	SuperCall(c, "update", dt)
+	SuperCall(c.Object, "update", dt)
 }
 
 // IsEnabled returns component whether is enabled.
@@ -113,11 +118,11 @@ func (c *component) SetName(name string) {
 }
 
 // SetOwner sets the Component owner.
-func (c *component) SetOwner(owner js.Object) {
+func (c *component) SetOwner(owner *js.Object) {
 	c.Call("setOwner", owner)
 }
 
 // GetOwner returns the Component owner.
-func (c *component) GetOwner() js.Object {
+func (c *component) GetOwner() *js.Object {
 	return c.Call("getOwner")
 }

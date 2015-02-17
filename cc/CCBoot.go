@@ -43,18 +43,18 @@ func WinSize() Size {
 	return Director().GetWinSize()
 }
 
-//func NewElement(name string) js.Object {
+//func NewElement(name string) *js.Object {
 //	return pcc.Call("newElement", name)
 //}
 
 // Each iterates over an object or an array, executing a function for each matched element.
-// obj could be a js.Object or []js.Object.
-func Each(obj interface{}, iterator func(...interface{}), context js.Object) {
+// obj could be a *js.Object or []*js.Object.
+func Each(obj interface{}, iterator func(...interface{}), context *js.Object) {
 	pcc.Call("each", obj, iterator, context)
 }
 
 //Extend copies all of the properties in source objects to target object and returns the target object.
-func Extend(target js.Object) js.Object {
+func Extend(target *js.Object) *js.Object {
 	return pcc.Call("extend", target)
 }
 
@@ -98,10 +98,10 @@ func IsCrossOrigin(url string) bool {
 ///////////
 
 //AsyncPool function is a helper of Async.
-//first paremeter should be a js.Object or []js.Object.
-type AsyncPool func(interface{}, int, func(...interface{}), func(...interface{}), js.Object)
+//first paremeter should be a *js.Object or []*js.Object.
+type AsyncPool func(interface{}, int, func(...interface{}), func(...interface{}), *js.Object)
 
-type async struct{ js.Object }
+type async struct{ *js.Object }
 
 var (
 	//Async is the global instance for asynchrone processing helper.
@@ -109,33 +109,33 @@ var (
 )
 
 // Series does tasks series.
-// tasks could be a js.Object or []js.Object.
-func (a *async) Series(tasks interface{}, cb func(...interface{}), target js.Object) AsyncPool {
+// tasks could be a *js.Object or []*js.Object.
+func (a *async) Series(tasks interface{}, cb func(...interface{}), target *js.Object) AsyncPool {
 	return a.Call("series", tasks, cb, target).Interface().(AsyncPool)
 }
 
 // Parallel does tasks parallel.
-// tasks could be a js.Object or []js.Object.
-func (a *async) Parallel(tasks interface{}, cb func(...interface{}), target js.Object) AsyncPool {
+// tasks could be a *js.Object or []*js.Object.
+func (a *async) Parallel(tasks interface{}, cb func(...interface{}), target *js.Object) AsyncPool {
 	return a.Call("parallel", tasks, cb, target).Interface().(AsyncPool)
 }
 
 // Waterfall does tasks waterfall.
-// tasks could be a js.Object or []js.Object.
-func (a *async) Waterfall(tasks interface{}, cb func(...interface{}), target js.Object) AsyncPool {
+// tasks could be a *js.Object or []*js.Object.
+func (a *async) Waterfall(tasks interface{}, cb func(...interface{}), target *js.Object) AsyncPool {
 	return a.Call("waterfall", tasks, cb, target).Interface().(AsyncPool)
 }
 
 // Map does tasks by iterator.
-// tasks could be a js.Object or []js.Object.
-// iterator could be a js.Object or func(...interface{}).
-func (a *async) Map(tasks interface{}, iterator interface{}, cb func(...interface{}), target js.Object) AsyncPool {
+// tasks could be a *js.Object or []*js.Object.
+// iterator could be a *js.Object or func(...interface{}).
+func (a *async) Map(tasks interface{}, iterator interface{}, cb func(...interface{}), target *js.Object) AsyncPool {
 	return a.Call("map", tasks, iterator, cb, target).Interface().(AsyncPool)
 }
 
 // MapLimit does tasks by iterator limit.
-// tasks could be a js.Object or []js.Object.
-func (a *async) MapLimit(tasks interface{}, limit int, iterator func(...interface{}), cb func(...interface{}), target js.Object) AsyncPool {
+// tasks could be a *js.Object or []*js.Object.
+func (a *async) MapLimit(tasks interface{}, limit int, iterator func(...interface{}), cb func(...interface{}), target *js.Object) AsyncPool {
 	return a.Call("mapLimit", tasks, limit, iterator, cb, target).Interface().(AsyncPool)
 }
 
@@ -205,7 +205,7 @@ const (
 	ORIENTATION_LANDSCAPE_RIGHT      = 3
 )
 
-type game struct{ js.Object }
+type game struct{ *js.Object }
 
 var (
 	//Game is an object to boot the game.
@@ -226,7 +226,7 @@ const (
 
 // Onstart is the callback when the scripts of engine have been load.
 func (g *game) SetOnStart(cb func()) {
-	BackupFunc(g, "onStart")
+	BackupFunc(g.Object, "onStart")
 	g.Set("onStart", cb)
 }
 
@@ -237,12 +237,12 @@ func (g *game) OnStart() {
 
 // Onstart is the callback when the scripts of engine have been load.
 func (g *game) OnStartSuper() {
-	SuperCall(g, "onStart")
+	SuperCall(g.Object, "onStart")
 }
 
 // Onstop is the callback when the game ends.
 func (g *game) SetOnStop(cb func()) {
-	BackupFunc(g, "onStop")
+	BackupFunc(g.Object, "onStop")
 	g.Set("onStop", cb)
 }
 
@@ -253,7 +253,7 @@ func (g *game) OnStop() {
 
 // Onstop is the callback when the game ends.
 func (g *game) OnStopSuper() {
-	SuperCall(g, "onStop")
+	SuperCall(g.Object, "onStop")
 }
 
 // Run runs the game.

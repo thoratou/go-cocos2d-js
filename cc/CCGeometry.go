@@ -15,7 +15,7 @@ type Point interface {
 	EqualsTo(Point) bool
 }
 
-type point struct{ js.Object }
+type point struct{ *js.Object }
 
 // NewPoint is the constructor for Point.
 func NewPoint(x int, y int) Point {
@@ -48,7 +48,7 @@ type Size interface {
 	EqualsTo(Size) bool
 }
 
-type size struct{ js.Object }
+type size struct{ *js.Object }
 
 // NewSize is the constructor for Size.
 func NewSize(width int, height int) Size {
@@ -95,7 +95,7 @@ type Rect interface {
 	Intersection(Rect) Rect
 }
 
-type rect struct{ js.Object }
+type rect struct{ *js.Object }
 
 // NewRect is the constructor for Rect.
 func NewRect(x int, y int, width int, height int) Rect {

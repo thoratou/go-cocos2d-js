@@ -55,10 +55,10 @@ type Node interface {
 	SetTag(int)
 	GetName() string
 	SetName(string)
-	GetUserData() js.Object
-	SetUserData(js.Object)
-	GetUserObject() js.Object
-	SetUserObject(js.Object)
+	GetUserData() *js.Object
+	SetUserData(*js.Object)
+	GetUserObject() *js.Object
+	SetUserObject(*js.Object)
 	GetOrderOfArrival() int
 	SetOrderOfArrival(int)
 	GetActionManager() ActionManager
@@ -148,14 +148,14 @@ type Node interface {
 	IsOpacityModifyRGB() bool
 }
 
-type node struct{ js.Object }
+type node struct{ *js.Object }
 
 func NewNode() Node {
 	return &node{pcc.Get("Node").New()}
 }
 
 //TODO: tmp
-func NewNodeJs(o js.Object) Node {
+func NewNodeJs(o *js.Object) Node {
 	return &node{o}
 }
 
@@ -367,19 +367,19 @@ func (n *node) SetName(name string) {
 	n.Call("setName", name)
 }
 
-func (n *node) GetUserData() js.Object {
+func (n *node) GetUserData() *js.Object {
 	return n.Call("getUserData")
 }
 
-func (n *node) SetUserData(data js.Object) {
+func (n *node) SetUserData(data *js.Object) {
 	n.Call("setUserData", data)
 }
 
-func (n *node) GetUserObject() js.Object {
+func (n *node) GetUserObject() *js.Object {
 	return n.Call("getUserObject")
 }
 
-func (n *node) SetUserObject(object js.Object) {
+func (n *node) SetUserObject(object *js.Object) {
 	n.Call("setUserObject", object)
 }
 
@@ -468,7 +468,7 @@ func (n *node) SortAllChildren() {
 }
 
 func (n *node) SetOnEnter(cb func()) {
-	BackupFunc(n, "onEnter")
+	BackupFunc(n.Object, "onEnter")
 	n.Set("onEnter", cb)
 }
 
@@ -477,11 +477,11 @@ func (n *node) OnEnter() {
 }
 
 func (n *node) OnEnterSuper() {
-	SuperCall(n, "onEnter")
+	SuperCall(n.Object, "onEnter")
 }
 
 func (n *node) SetOnEnterTransitionDidFinish(cb func()) {
-	BackupFunc(n, "onEnterTransitionDidFinish")
+	BackupFunc(n.Object, "onEnterTransitionDidFinish")
 	n.Set("onEnterTransitionDidFinish", cb)
 }
 
@@ -490,11 +490,11 @@ func (n *node) OnEnterTransitionDidFinish() {
 }
 
 func (n *node) OnEnterTransitionDidFinishSuper() {
-	SuperCall(n, "onEnterTransitionDidFinish")
+	SuperCall(n.Object, "onEnterTransitionDidFinish")
 }
 
 func (n *node) SetOnExitTransitionDidStart(cb func()) {
-	BackupFunc(n, "onExitTransitionDidStart")
+	BackupFunc(n.Object, "onExitTransitionDidStart")
 	n.Set("onExitTransitionDidStart", cb)
 }
 
@@ -503,11 +503,11 @@ func (n *node) OnExitTransitionDidStart() {
 }
 
 func (n *node) OnExitTransitionDidStartSuper() {
-	SuperCall(n, "onExitTransitionDidStart")
+	SuperCall(n.Object, "onExitTransitionDidStart")
 }
 
 func (n *node) SetOnExit(cb func()) {
-	BackupFunc(n, "onExit")
+	BackupFunc(n.Object, "onExit")
 	n.Set("onExit", cb)
 }
 
@@ -516,7 +516,7 @@ func (n *node) OnExit() {
 }
 
 func (n *node) OnExitSuper() {
-	SuperCall(n, "onExit")
+	SuperCall(n.Object, "onExit")
 }
 
 func (n *node) RunAction(action Action) {

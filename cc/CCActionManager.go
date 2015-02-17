@@ -9,7 +9,7 @@ import (
 /////////////////
 
 type HashElement interface{}
-type hashElement struct{ js.Object }
+type hashElement struct{ *js.Object }
 
 // NewHashElement is the constructor for HashElement.
 func NewHashElement() HashElement {
@@ -35,7 +35,7 @@ type ActionManager interface {
 	PurgeSharedManager()
 	Update(float64)
 }
-type actionManager struct{ js.Object }
+type actionManager struct{ *js.Object }
 
 // NewActionManager is the constructor for ActionManager.
 func NewActionManager() ActionManager {

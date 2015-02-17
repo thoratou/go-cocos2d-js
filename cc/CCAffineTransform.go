@@ -28,7 +28,7 @@ type AffineTransform interface {
 	Invert() AffineTransform
 }
 
-type affineTransform struct{ js.Object }
+type affineTransform struct{ *js.Object }
 
 // NewAffineTransform is the constructor for AffineTransform.
 func NewAffineTransform(a, b, c, d, tx, ty float64) AffineTransform {

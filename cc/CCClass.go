@@ -10,7 +10,7 @@ func computeBackupName(name string) string {
 	return "_gococos2d_backup_" + name
 }
 
-func findFuncInObjectHierarchy(object js.Object, name string) js.Object {
+func findFuncInObjectHierarchy(object *js.Object, name string) *js.Object {
 	if jsFunc := object.Get(name); jsFunc != nil && jsFunc != js.Undefined {
 		return jsFunc
 	} else if proto := object.Get("__proto__"); proto != nil && proto != js.Undefined {
@@ -20,15 +20,7 @@ func findFuncInObjectHierarchy(object js.Object, name string) js.Object {
 	}
 }
 
-func findPureJsObjectInHierarchy(object js.Object) js.Object {
-	if child := object.Get("Object"); child != nil && child != js.Undefined {
-		return findPureJsObjectInHierarchy(child)
-	} else {
-		return object
-	}
-}
-
-func backupFunc(object js.Object, name string) {
+func BackupFunc(object *js.Object, name string) {
 	backupName := computeBackupName(name)
 	if object.Get(backupName) == js.Undefined {
 		jsFunc := findFuncInObjectHierarchy(object, name)
@@ -38,15 +30,7 @@ func backupFunc(object js.Object, name string) {
 	}
 }
 
-func BackupFunc(object js.Object, name string) {
-	backupFunc(findPureJsObjectInHierarchy(object), name)
-}
-
-func superCall(object js.Object, name string, args ...interface{}) js.Object {
+func SuperCall(object *js.Object, name string, args ...interface{}) *js.Object {
 	backupName := computeBackupName(name)
 	return object.Call(backupName, args)
-}
-
-func SuperCall(object js.Object, name string, args ...interface{}) js.Object {
-	return superCall(findPureJsObjectInHierarchy(object), name, args)
 }

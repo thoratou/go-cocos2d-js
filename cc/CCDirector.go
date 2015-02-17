@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
-type director struct{ js.Object }
+type director struct{ *js.Object }
 
 func (d *director) Init() {
 	d.Call("init")

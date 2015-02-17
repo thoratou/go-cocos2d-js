@@ -29,7 +29,7 @@ type Action interface {
 	Release()
 }
 
-type action struct{ js.Object }
+type action struct{ *js.Object }
 
 // NewAction is the constructor for Action.
 func NewAction() Action {
@@ -53,7 +53,7 @@ func (a *action) Stop() {
 }
 
 func (a *action) SetStep(step func(float64)) {
-	BackupFunc(a, "step")
+	BackupFunc(a.Object, "step")
 	a.Set("step", step)
 }
 
@@ -62,11 +62,11 @@ func (a *action) Step(dt float64) {
 }
 
 func (a *action) StepSuper(dt float64) {
-	SuperCall(a, "step", dt)
+	SuperCall(a.Object, "step", dt)
 }
 
 func (a *action) SetUpdate(update func(float64)) {
-	BackupFunc(a, "update")
+	BackupFunc(a.Object, "update")
 	a.Set("update", update)
 }
 
@@ -75,7 +75,7 @@ func (a *action) Update(dt float64) {
 }
 
 func (a *action) UpdateSuper(dt float64) {
-	SuperCall(a, "update", dt)
+	SuperCall(a.Object, "update", dt)
 }
 
 func (a *action) GetTarget() Node {

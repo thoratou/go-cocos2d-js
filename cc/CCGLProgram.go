@@ -6,8 +6,8 @@ import (
 
 type WebGLUniformLocation interface{}
 type WebGLProgram interface{}
-type webGLUniformLocation struct{ js.Object }
-type webGLProgram struct{ js.Object }
+type webGLUniformLocation struct{ *js.Object }
+type webGLProgram struct{ *js.Object }
 
 // The Component class
 type GLProgram interface {
@@ -56,11 +56,11 @@ type GLProgram interface {
 	Release()
 }
 
-type glProgram struct{ js.Object }
+type glProgram struct{ *js.Object }
 
 // NewComponent is the constructor for Component.
 // glContext could be nil ; in this case, the global context will be used
-func NewGlProgram(vShaderFileName string, fShaderFileName string, glContext js.Object) GLProgram {
+func NewGlProgram(vShaderFileName string, fShaderFileName string, glContext *js.Object) GLProgram {
 	return &glProgram{pcc.Get("GLProgram").New()}
 }
 

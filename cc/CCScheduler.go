@@ -33,22 +33,22 @@ type Scheduler interface {
 	SetTimeScale(float64)
 	GetTimeScale() float64
 	Update(float64)
-	ScheduleCallbackForTarget(js.Object, func(...interface{}), int, int, float64, bool)
-	ScheduleUpdateForTarget(js.Object, int, bool)
-	UnscheduleCallbackForTarget(js.Object, func(...interface{}))
-	UnscheduleUpdateForTarget(js.Object)
-	UnscheduleAllCallbacksForTarget(js.Object)
+	ScheduleCallbackForTarget(*js.Object, func(...interface{}), int, int, float64, bool)
+	ScheduleUpdateForTarget(*js.Object, int, bool)
+	UnscheduleCallbackForTarget(*js.Object, func(...interface{}))
+	UnscheduleUpdateForTarget(*js.Object)
+	UnscheduleAllCallbacksForTarget(*js.Object)
 	UnscheduleAllCallbacks()
 	UnscheduleAllCallbacksWithMinPriority(int)
 	PauseAllTargets()
 	PauseAllTargetsWithMinPriority(int)
-	ResumeTargets([]js.Object)
-	PauseTarget(js.Object)
-	ResumeTarget(js.Object)
-	IsTargetPaused(js.Object) bool
+	ResumeTargets([]*js.Object)
+	PauseTarget(*js.Object)
+	ResumeTarget(*js.Object)
+	IsTargetPaused(*js.Object) bool
 }
 
-type scheduler struct{ js.Object }
+type scheduler struct{ *js.Object }
 
 func NewScheduler() Scheduler {
 	return &scheduler{pcc.Get("Scheduler").New()}
@@ -78,31 +78,31 @@ func (s *scheduler) Update(dt float64) {
 // If the callback function is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
 // repeat let the action be repeated repeat + 1 times, use cc.REPEAT_FOREVER to let the action run continuously.
 // delay is the amount of time the action will wait before it'll start.
-func (s *scheduler) ScheduleCallbackForTarget(target js.Object, callbackFn func(...interface{}), interval int, repeat int, delay float64, paused bool) {
+func (s *scheduler) ScheduleCallbackForTarget(target *js.Object, callbackFn func(...interface{}), interval int, repeat int, delay float64, paused bool) {
 	s.Call("scheduleCallbackForTarget", target, callbackFn, interval, repeat, delay, paused)
 }
 
 // ScheduleUpdateForTarget schedules the 'update' callback_fn for a given target with a given priority.
 // The 'update' callback_fn will be called every frame.
 // The lower the priority, the earlier it is called.
-func (s *scheduler) ScheduleUpdateForTarget(target js.Object, priority int, paused bool) {
+func (s *scheduler) ScheduleUpdateForTarget(target *js.Object, priority int, paused bool) {
 	s.Call("scheduleUpdateForTarget", target, priority, paused)
 }
 
 // UnscheduleCallbackForTarget unschedules a callback function for a given target.
 // If you want to unschedule the "update", use UnscheduleUpdateForTarget.
-func (s *scheduler) UnscheduleCallbackForTarget(target js.Object, callbackFn func(...interface{})) {
+func (s *scheduler) UnscheduleCallbackForTarget(target *js.Object, callbackFn func(...interface{})) {
 	s.Call("unscheduleCallbackForTarget", target, callbackFn)
 }
 
 // UnscheduleUpdateForTarget unschedules the update callback function for a given target.
-func (s *scheduler) UnscheduleUpdateForTarget(target js.Object) {
+func (s *scheduler) UnscheduleUpdateForTarget(target *js.Object) {
 	s.Call("unscheduleUpdateForTarget", target)
 }
 
 // UnscheduleAllCallbacksForTarget unschedules all function callbacks for a given target.
 // This also includes the "update" callback function.
-func (s *scheduler) UnscheduleAllCallbacksForTarget(target js.Object) {
+func (s *scheduler) UnscheduleAllCallbacksForTarget(target *js.Object) {
 	s.Call("unscheduleAllCallbacksForTarget", target)
 }
 
@@ -132,25 +132,25 @@ func (s *scheduler) PauseAllTargetsWithMinPriority(minPriority int) {
 
 // ResumeTargets resumes selectors on a set of targets.
 // This can be useful for undoing a call to pauseAllCallbacks.
-func (s *scheduler) ResumeTargets(targetsToResume []js.Object) {
+func (s *scheduler) ResumeTargets(targetsToResume []*js.Object) {
 	s.Call("resumeTargets", targetsToResume)
 }
 
 // PauseTarget Pauses the target.
 // All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
 // If the target is not present, nothing happens.
-func (s *scheduler) PauseTarget(target js.Object) {
+func (s *scheduler) PauseTarget(target *js.Object) {
 	s.Call("pauseTarget", target)
 }
 
 // ResumeTarget resumes the target.
 // The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
 // If the target is not present, nothing happens.
-func (s *scheduler) ResumeTarget(target js.Object) {
+func (s *scheduler) ResumeTarget(target *js.Object) {
 	s.Call("resumeTarget", target)
 }
 
 // IsTargetPaused returns whether or not the target is paused
-func (s *scheduler) IsTargetPaused(target js.Object) bool {
+func (s *scheduler) IsTargetPaused(target *js.Object) bool {
 	return s.Call("isTargetPaused", target).Bool()
 }
