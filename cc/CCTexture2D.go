@@ -49,3 +49,51 @@ type texture2D struct{ *js.Object }
 func NewTexture2D() Texture2D {
 	return &texture2D{pcc.Get("Texture2D").New()}
 }
+
+func (t *texture2D) GetPixelsWide() int {
+	return t.Call("getPixelsWide").Int()
+}
+
+func (t *texture2D) GetPixelsHigh() int {
+	return t.Call("getPixelsHigh").Int()
+}
+
+func (t *texture2D) GetContentSize() Size {
+	return &size{t.Call("getContentSize")}
+}
+
+func (t *texture2D) GetContentSizeInPixels() Size {
+	return &size{t.Call("getContentSizeInPixels")}
+}
+
+func (t *texture2D) InitWithElement(element *js.Object) {
+	t.Call("initWithElement", element)
+}
+
+func (t *texture2D) GetHtmlElementObj() *js.Object {
+	return t.Call("getHtmlElementObj")
+}
+
+func (t *texture2D) IsLoaded() bool {
+	return t.Call("isLoaded").Bool()
+}
+
+func (t *texture2D) HandleLoadedTexture() {
+	t.Call("handleLoadedTexture")
+}
+
+func (t *texture2D) Description() string {
+	return t.Call("description").String()
+}
+
+func (t *texture2D) ReleaseTexture() {
+	t.Call("releaseTexture")
+}
+
+func (t *texture2D) AddLoadedEventListener(callback func(...interface{}), target Node) {
+	t.Call("addLoadedEventListener", callback, target)
+}
+
+func (t *texture2D) RemoveLoadedEventListener(target Node) {
+	t.Call("removeLoadedEventListener", target)
+}
