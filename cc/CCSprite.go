@@ -55,7 +55,11 @@ type Sprite interface {
 
 type sprite struct{ node }
 
-func NewSprite(fileName string, rect Rect, rotated bool) Node {
+func NewSprite(fileName string) Sprite {
+	return &sprite{node{pcc.Get("Sprite").New(fileName)}}
+}
+
+func NewSpriteWithRectAndRotated(fileName string, rect Rect, rotated bool) Sprite {
 	return &sprite{node{pcc.Get("Sprite").New(fileName, rect, rotated)}}
 }
 

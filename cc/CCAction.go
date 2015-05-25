@@ -36,6 +36,11 @@ func NewAction() Action {
 	return &action{pcc.Call("action")}
 }
 
+//TODO: tmp
+func NewActionJs(o *js.Object) Action {
+	return &action{o}
+}
+
 func (a *action) Clone() Action {
 	return &action{a.Call("clone")}
 }
@@ -114,7 +119,31 @@ func (a *action) Release() {
 // FiniteTimeAction //
 //////////////////////
 
-//TODO FiniteTimeAction
+type FiniteTimeAction interface {
+	Action
+	GetDuration() float64
+	SetDuration(float64)
+	Reverse() FiniteTimeAction
+	//Clone() Action defined as part of Action
+}
+
+type finiteTimeAction struct{ action }
+
+func (f *finiteTimeAction) GetDuration() float64 {
+	return f.Call("getDuration").Float()
+}
+
+func (f *finiteTimeAction) SetDuration(duration float64) {
+	f.Call("setDuration", duration)
+}
+
+func (f *finiteTimeAction) Reverse() FiniteTimeAction {
+	return &finiteTimeAction{action{f.Call("reverse")}}
+}
+
+func (f *finiteTimeAction) Clone() Action {
+	return &finiteTimeAction{action{f.Call("clone")}}
+}
 
 ///////////
 // Speed //
