@@ -34,7 +34,7 @@ Based-file support:
 |cocos2d/core/event-manager/CCEventListener.js        | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/core/event-manager/CCEventManager.js         | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/core/event-manager/CCTouch.js                | <span style="color:#00CC00">full</span>    |                                   |
-|cocos2d/core/labelttf/CCLabelTTF.js                  | <span style="color:#00AADD">not yet</span> |                                   |
+|cocos2d/core/labelttf/CCLabelTTF.js                  | <span style="color:#DDAA00">partial</span> | Dependences:FontDefinition        |
 |cocos2d/core/layers/CCLayer.js                       | <span style="color:#DDAA00">partial</span> | TODO: LayerColor, LayerGradient, LayerMultiplex |
 |cocos2d/core/platform/CCClass.js                     | <span style="color:#CC0000">no</span>      | emulates this._super(), no CCClass no go side |
 |cocos2d/core/platform/CCCommon.js                    | <span style="color:#00AADD">not yet</span> |                                   |
