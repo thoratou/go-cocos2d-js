@@ -155,39 +155,28 @@ func (a *async) MapLimit(tasks interface{}, limit int, iterator func(...interfac
 // LOG //
 /////////
 
-func cclog(jsMethod string, args []interface{}) {
-	switch len(args) {
-	case 0:
-		return
-	case 1:
-		for _, toLog := range args {
-			pcc.Call(jsMethod, toLog)
-		}
-		return
-	default:
-		pcc.Call(jsMethod, args)
-		return
-	}
+func cclog(jsMethod string, args ...interface{}) {
+	pcc.Call(jsMethod, args...)
 }
 
 //Log logs to console/page depending on the user project.
 func Log(args ...interface{}) {
-	cclog("log", args)
+	cclog("log", args...)
 }
 
 //Log logs warning to console/page depending on the user project.
 func Warn(args ...interface{}) {
-	cclog("warn", args)
+	cclog("warn", args...)
 }
 
 //Log logs error to console/page depending on the user project.
 func Error(args ...interface{}) {
-	cclog("error", args)
+	cclog("error", args...)
 }
 
 //Assert tests the assertion, stop if not verified and logs error to console/page depending on the user project.
 func Assert(args ...interface{}) {
-	cclog("assert", args)
+	cclog("assert", args...)
 }
 
 //////////////

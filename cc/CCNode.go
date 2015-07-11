@@ -146,6 +146,12 @@ type Node interface {
 	SetCascadeColorEnabled(bool)
 	SetOpacityModifyRGB(bool)
 	IsOpacityModifyRGB() bool
+
+	//additional attributes
+	GetWidth() int
+	SetWidth(int)
+	GetHeight() int
+	SetHeight(int)
 }
 
 type node struct{ *js.Object }
@@ -741,4 +747,20 @@ func (n *node) SetY(y float64) {
 
 func (n *node) GetY() float64 {
 	return n.Get("y").Float()
+}
+
+func (n *node) GetWidth() int {
+	return n.Get("width").Int()
+}
+
+func (n *node) SetWidth(width int) {
+	n.Set("width", width)
+}
+
+func (n *node) GetHeight() int {
+	return n.Get("height").Int()
+}
+
+func (n *node) SetHeight(height int) {
+	n.Set("height", height)
 }

@@ -42,12 +42,8 @@ type Menu interface {
 type menu struct{ layer }
 
 // NewMenu is the constructor for Menu.
-func NewMenu(menuItems ...MenuItem) Menu {
-	return &menu{layer{node{pcc.Get("Menu").New(menuItems)}}}
-}
-
-// NewMenuWithArray is the constructor for Menu with MenuItem array.
-func NewMenuWithArray(menuItems []MenuItem) Menu {
+func NewMenu(menuItems ...interface{}) Menu {
+	//Menu accepts array as parameter
 	return &menu{layer{node{pcc.Get("Menu").New(menuItems)}}}
 }
 

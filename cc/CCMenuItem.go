@@ -188,6 +188,10 @@ func NewMenuItemFont(value string, callback func(), target Node) MenuItemFont {
 	return &menuItemFont{menuItemLabel{menuItem{node{pcc.Get("MenuItemFont").New(value, callback, target)}}}}
 }
 
+func NewMenuItemFontWithString(value string) MenuItemFont {
+	return &menuItemFont{menuItemLabel{menuItem{node{pcc.Get("MenuItemFont").New(value)}}}}
+}
+
 func (m *menuItemFont) SetFontSize(s int) {
 	m.Call("setFontSize", s)
 }
@@ -348,4 +352,91 @@ type MenuItemToggle interface {
 	//SetOnEnter(func()) defined as part of Node
 	//OnEnter() defined as part of Node
 	//OnEnterSuper() defined as part of Node
+}
+
+type menuItemToggle struct{ menuItem }
+
+func NewMenuItemToggle(items ...MenuItem) MenuItemToggle {
+	//MenuItemToggle only accepts multiple parameters
+	//has to convert it to ...interface{}
+	length := len(items)
+	out := make([]interface{}, length, length)
+	for i := 0; i < length; i++ {
+		out[i] = items[i]
+	}
+	return &menuItemToggle{menuItem{node{pcc.Get("MenuItemToggle").New(out...)}}}
+}
+
+func (m *menuItemToggle) GetOpacity() int {
+	return m.Call("getOpacity").Int()
+}
+
+func (m *menuItemToggle) SetOpacity(opacity int) {
+	m.Call("setOpacity", opacity)
+}
+
+func (m *menuItemToggle) GetColor() Color {
+	return &color{m.Call("getColor")}
+}
+
+func (m *menuItemToggle) SetColor(color Color) {
+	m.Call("setColor", color)
+}
+
+func (m *menuItemToggle) GetSelectedIndex() int {
+	return m.Call("getSelectedIndex").Int()
+}
+
+func (m *menuItemToggle) SetSelectedIndex(selectedIndex int) {
+	m.Call("setSelectedIndex", selectedIndex)
+}
+
+func (m *menuItemToggle) GetSubItems() []MenuItem {
+	subItems := m.Call("getSubItems")
+	length := subItems.Length()
+	out := make([]MenuItem, length, length)
+	for i := 0; i < length; i++ {
+		out[i] = &menuItem{node{subItems.Index(i)}}
+	}
+	return out
+}
+
+func (m *menuItemToggle) SetSubItems(subItems []MenuItem) {
+	m.Call("setSubItems", subItems)
+}
+func (m *menuItemToggle) AddSubItem(item MenuItem) {
+	m.Call("addSubItem", item)
+}
+
+func (m *menuItemToggle) Activate() {
+	m.Call("activate")
+}
+
+func (m *menuItemToggle) Selected() {
+	m.Call("selected")
+}
+
+func (m *menuItemToggle) Unselected() {
+	m.Call("unselected")
+}
+
+func (m *menuItemToggle) SetEnabled(enabled bool) {
+	m.Call("setEnabled", enabled)
+}
+
+func (m *menuItemToggle) GetSelectedItem() MenuItem {
+	return &menuItem{node{m.Call("getSelectedItem")}}
+}
+
+func (m *menuItemToggle) SetOnEnter(cb func()) {
+	BackupFunc(m.Object, "onEnter")
+	m.Set("onEnter", cb)
+}
+
+func (m *menuItemToggle) OnEnter() {
+	m.Call("onEnter")
+}
+
+func (m *menuItemToggle) OnEnterSuper() {
+	SuperCall(m.Object, "onEnter")
 }

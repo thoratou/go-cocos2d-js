@@ -67,7 +67,7 @@ Based-file support:
 |cocos2d/labels/CCLabelAtlas.js                       | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/labels/CCLabelBMFont.js                      | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/menus/CCMenu.js                              | <span style="color:#00CC00">full</span>    |                                   |
-|cocos2d/menus/CCMenuItem.js                          | <span style="color:#DDAA00">partial</span> | TODO: MenuItemToggle              |
+|cocos2d/menus/CCMenuItem.js                          | <span style="color:#00CC00">full</span>    |                                   |
 |cocos2d/motion-streak/CCMotionStreak.js              | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/node-grid/CCNodeGrid.js                      | <span style="color:#00CC00">full</span>    |                                   |
 |cocos2d/parallax/CCParallaxNode.js                   | <span style="color:#00AADD">not yet</span> |                                   |
