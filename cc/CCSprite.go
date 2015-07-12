@@ -16,8 +16,6 @@ type Sprite interface {
 	SetTextureAtlas(TextureAtlas)
 	GetOffsetPosition() Point
 	GetBlendFunc() BlendFunc
-	InitWithSpriteFrame(SpriteFrame)
-	InitWithSpriteFrameName(string)
 	UseBatchNode(SpriteBatchNode)
 	SetVertexRect(Rect)
 	//SortAllChildren() defined as part of Node
@@ -36,9 +34,6 @@ type Sprite interface {
 	GetTexture() Texture2D
 	GetQuad() V3F_C4B_T2F_Quad
 	SetBlendFunc(BlendFunc)
-	//Init() bool defined as part of Node
-	InitWithFile(string, Rect) bool
-	InitWithTexture(Texture2D, Rect, bool, bool) bool
 	SetTextureRect(Rect, bool, Size, bool)
 	//UpdateTransform() defined as part of Node
 	//AddChild(Node) defined as part of Node
@@ -55,12 +50,16 @@ type Sprite interface {
 
 type sprite struct{ node }
 
-func NewSprite(fileName string) Sprite {
+func NewSpriteWithFileName(fileName string) Sprite {
 	return &sprite{node{pcc.Get("Sprite").New(fileName)}}
 }
 
-func NewSpriteWithRectAndRotated(fileName string, rect Rect, rotated bool) Sprite {
+func NewSpriteAllArgs(fileName string, rect Rect, rotated bool) Sprite {
 	return &sprite{node{pcc.Get("Sprite").New(fileName, rect, rotated)}}
+}
+
+func NewSprite(args ...interface{}) Sprite {
+	return &sprite{node{pcc.Get("Sprite").New(args...)}}
 }
 
 const (
@@ -105,14 +104,6 @@ func (s *sprite) GetOffsetPosition() Point {
 
 func (s *sprite) GetBlendFunc() BlendFunc {
 	return &blendFunc{s.Call("getBlendFunc")}
-}
-
-func (s *sprite) InitWithSpriteFrame(spriteFrame SpriteFrame) {
-	s.Call("initWithSpriteFrame", spriteFrame)
-}
-
-func (s *sprite) InitWithSpriteFrameName(spriteFrameName string) {
-	s.Call("initWithSpriteFrameName", spriteFrameName)
 }
 
 func (s *sprite) UseBatchNode(batchNode SpriteBatchNode) {
@@ -184,17 +175,6 @@ func (s *sprite) GetQuad() V3F_C4B_T2F_Quad {
 
 func (s *sprite) SetBlendFunc(blendFunc BlendFunc) {
 	s.Call("setBlendFunc", blendFunc)
-}
-
-func (s *sprite) Init() bool {
-	return s.Call("init").Bool()
-}
-
-func (s *sprite) InitWithFile(filename string, rect Rect) bool {
-	return s.Call("initWithFile", filename, rect).Bool()
-}
-func (s *sprite) InitWithTexture(texture Texture2D, rect Rect, rotated bool, counterclockwise bool) bool {
-	return s.Call("initWithTexture", texture, rect, counterclockwise).Bool()
 }
 
 func (s *sprite) SetTextureRect(rect Rect, rotated bool, untrimmedSize Size, needConvert bool) {

@@ -3,8 +3,6 @@ package cc
 // The Scene class
 type LabelTTF interface {
 	Sprite
-	InitWithString(string, string, int, Size, int, int) bool
-	//Init() bool defined as part of Node
 	Description() string
 	GetLineHeight() int
 	SetLineHeight(int)
@@ -36,7 +34,7 @@ type LabelTTF interface {
 type labelTTF struct{ sprite }
 
 // NewLabelTTF is the constructor for Scene.
-func NewLabelTTF(text string, fontName string, fontSize int) LabelTTF {
+func NewLabelTTFAllArgs(text string, fontName string, fontSize int) LabelTTF {
 	return &labelTTF{sprite{node{pcc.Get("LabelTTF").New(text, fontName, fontSize)}}}
 }
 
@@ -45,12 +43,9 @@ func NewLabelTTFWithDimensionAndAlignment(text string, fontName string, fontSize
 	return &labelTTF{sprite{node{pcc.Get("LabelTTF").New(text, fontName, fontSize, dimensions, hAlignment, vAlignment)}}}
 }
 
-func (l *labelTTF) InitWithString(label string, fontName string, fontSize int, dimensions Size, hAlignment int, vAlignment int) bool {
-	return l.Call("initWithString", label, fontName, fontSize, dimensions, hAlignment, vAlignment).Bool()
-}
-
-func (l *labelTTF) Init() bool {
-	return l.Call("init").Bool()
+// NewLabelTTF is the constructor for Scene.
+func NewLabelTTF(args ...interface{}) LabelTTF {
+	return &labelTTF{sprite{node{pcc.Get("LabelTTF").New(args...)}}}
 }
 
 func (l *labelTTF) Description() string {

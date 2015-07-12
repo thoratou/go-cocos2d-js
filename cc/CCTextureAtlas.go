@@ -14,8 +14,6 @@ type TextureAtlas interface {
 	GetQuads() []V3F_C4B_T2F_Quad
 	SetQuads([]V3F_C4B_T2F_Quad)
 	Description() string
-	InitWithFile(string, int)
-	InitWithTexture(Image, int)
 	UpdateQuad(V3F_C4B_T2F_Quad, int)
 	InsertQuad(V3F_C4B_T2F_Quad, int)
 	InsertQuads([]V3F_C4B_T2F_Quad, int, int)
@@ -73,14 +71,6 @@ func (t *textureAtlas) SetQuads(quads []V3F_C4B_T2F_Quad) {
 
 func (t *textureAtlas) Description() string {
 	return t.Call("description").String()
-}
-
-func (t *textureAtlas) InitWithFile(file string, capacity int) {
-	t.Call("initWithFile", file, capacity)
-}
-
-func (t *textureAtlas) InitWithTexture(texture Image, capacity int) {
-	t.Call("initWithTexture", texture, capacity)
 }
 
 func (t *textureAtlas) UpdateQuad(quad V3F_C4B_T2F_Quad, index int) {

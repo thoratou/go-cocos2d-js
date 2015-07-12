@@ -5,7 +5,6 @@ import (
 )
 
 type Node interface {
-	Init() bool
 	Attr(map[string]interface{})
 	GetSkewX() float64
 	SetSkewX(float64)
@@ -163,10 +162,6 @@ func NewNode() Node {
 //TODO: tmp
 func NewNodeJs(o *js.Object) Node {
 	return &node{o}
-}
-
-func (n *node) Init() bool {
-	return n.Call("init").Bool()
 }
 
 func (n *node) Attr(attrs map[string]interface{}) {

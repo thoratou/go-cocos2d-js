@@ -10,9 +10,6 @@ type SpriteBatchNode interface {
 	GetTextureAtlas() TextureAtlas
 	SetTextureAtlas(TextureAtlas)
 	GetDescendants() []SpriteBatchNode
-	InitWithFile(string, int) bool
-	//Also got an issue with this method, same one than InitWithFile
-	//Init(string, int) bool defined as part of Node
 	IncreaseAtlasCapacity()
 	RemoveChildAtIndex(int, bool)
 	RebuildIndexInOrder(Sprite, int) int
@@ -26,7 +23,6 @@ type SpriteBatchNode interface {
 	//RemoveChild(Sprite, bool) defined as part of Node
 	UpdateQuadFromSprite(Sprite, int)
 	InsertQuadFromSprite(Sprite, int)
-	InitWithTexture(Texture2D, int) bool
 	InsertChild(Sprite, int)
 	AppendChild(Sprite)
 	RemoveSpriteFromAtlas(Sprite)
@@ -70,10 +66,6 @@ func (s *spriteBatchNode) GetDescendants() []SpriteBatchNode {
 		out[i] = &spriteBatchNode{node{descendants.Index(i)}}
 	}
 	return out
-}
-
-func (s *spriteBatchNode) InitWithFile(fileImage string, capacity int) bool {
-	return s.Call("initWithFile", fileImage, capacity).Bool()
 }
 
 func (s *spriteBatchNode) IncreaseAtlasCapacity() {
@@ -128,10 +120,6 @@ func (s *spriteBatchNode) UpdateQuadFromSprite(sprite Sprite, index int) {
 
 func (s *spriteBatchNode) InsertQuadFromSprite(sprite Sprite, index int) {
 	s.Call("insertQuadFromSprite", sprite, index)
-}
-
-func (s *spriteBatchNode) InitWithTexture(tex Texture2D, capacity int) bool {
-	return s.Call("initWithTexture", tex, capacity).Bool()
 }
 
 func (s *spriteBatchNode) InsertChild(sprite Sprite, index int) {

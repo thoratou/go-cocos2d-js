@@ -7,7 +7,6 @@ package cc
 type ActionInterval interface {
 	FiniteTimeAction
 	GetElapsed() float64
-	InitWithDuration(float64) bool
 	//IsDone() bool defined as part of Action
 	//Clone() Action  defined as part of Action
 	//TODO Easing(ActionEase)
@@ -31,10 +30,6 @@ func NewActionInterval(duration float64) ActionInterval {
 
 func (a *actionInterval) GetElapsed() float64 {
 	return a.Call("getElapsed").Float()
-}
-
-func (a *actionInterval) InitWithDuration(duration float64) bool {
-	return a.Call("initWithDuration", duration).Bool()
 }
 
 func (a *actionInterval) IsDone() bool {
@@ -91,7 +86,6 @@ func (a *actionInterval) RepeatForever() {
 
 type Sequence interface {
 	ActionInterval
-	InitWithTwoActions(FiniteTimeAction, FiniteTimeAction) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Stop() defined as part of Action
@@ -103,10 +97,6 @@ type sequence struct{ actionInterval }
 
 func NewSequence(actions ...FiniteTimeAction) Sequence {
 	return &sequence{actionInterval{finiteTimeAction{action{pcc.Call("sequence", actions)}}}}
-}
-
-func (s *sequence) InitWithTwoActions(actionOne FiniteTimeAction, actionTwo FiniteTimeAction) bool {
-	return s.Call("initWithTwoActions", actionOne, actionTwo).Bool()
 }
 
 func (s *sequence) Clone() Action {
@@ -143,7 +133,6 @@ func (s *sequence) Reverse() FiniteTimeAction {
 
 type Spawn interface {
 	ActionInterval
-	InitWithTwoActions(FiniteTimeAction, FiniteTimeAction) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Stop() defined as part of Action
@@ -155,10 +144,6 @@ type spawn struct{ actionInterval }
 
 func NewSpawn(actions ...FiniteTimeAction) Spawn {
 	return &spawn{actionInterval{finiteTimeAction{action{pcc.Call("spawn", actions)}}}}
-}
-
-func (s *spawn) InitWithTwoActions(actionOne FiniteTimeAction, actionTwo FiniteTimeAction) bool {
-	return s.Call("initWithTwoActions", actionOne, actionTwo).Bool()
 }
 
 func (s *spawn) Clone() Action {
@@ -187,7 +172,6 @@ func (s *spawn) Reverse() FiniteTimeAction {
 
 type RotateTo interface {
 	ActionInterval
-	InitWithDurationAndDeltaAngle(float64, float64, float64) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -198,10 +182,6 @@ type rotateTo struct{ actionInterval }
 
 func NewRotateTo(duration float64, deltaAngleX float64, deltaAngleY float64) RotateTo {
 	return &rotateTo{actionInterval{finiteTimeAction{action{pcc.Call("rotateTo", duration, deltaAngleX, deltaAngleY)}}}}
-}
-
-func (r *rotateTo) InitWithDurationAndDeltaAngle(duration float64, deltaAngleX float64, deltaAngleY float64) bool {
-	return r.Call("initWithDuration", duration, deltaAngleX, deltaAngleY).Bool()
 }
 
 func (r *rotateTo) Clone() Action {
@@ -226,7 +206,6 @@ func (r *rotateTo) Reverse() FiniteTimeAction {
 
 type RotateBy interface {
 	ActionInterval
-	InitWithDurationAndDeltaAngle(float64, float64, float64) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -237,10 +216,6 @@ type rotateBy struct{ actionInterval }
 
 func NewRotateBy(duration float64, deltaAngleX float64, deltaAngleY float64) RotateBy {
 	return &rotateBy{actionInterval{finiteTimeAction{action{pcc.Call("rotateBy", duration, deltaAngleX, deltaAngleY)}}}}
-}
-
-func (r *rotateBy) InitWithDurationAndDeltaAngle(duration float64, deltaAngleX float64, deltaAngleY float64) bool {
-	return r.Call("initWithDuration", duration, deltaAngleX, deltaAngleY).Bool()
 }
 
 func (r *rotateBy) Clone() Action {
@@ -265,7 +240,6 @@ func (r *rotateBy) Reverse() FiniteTimeAction {
 
 type MoveBy interface {
 	ActionInterval
-	InitWithDurationAndDeltaPosition(float64, Point) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -276,10 +250,6 @@ type moveBy struct{ actionInterval }
 
 func NewMoveBy(duration float64, position Point) MoveBy {
 	return &moveBy{actionInterval{finiteTimeAction{action{pcc.Call("moveBy", duration, position)}}}}
-}
-
-func (m *moveBy) InitWithDurationAndDeltaPosition(duration float64, position Point) bool {
-	return m.Call("initWithDuration", duration, position).Bool()
 }
 
 func (m *moveBy) Clone() Action {
@@ -304,7 +274,6 @@ func (m *moveBy) Reverse() FiniteTimeAction {
 
 type MoveTo interface {
 	ActionInterval
-	InitWithDurationAndDeltaPosition(float64, Point) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -315,10 +284,6 @@ type moveTo struct{ actionInterval }
 
 func NewMoveTo(duration float64, position Point) MoveTo {
 	return &moveTo{actionInterval{finiteTimeAction{action{pcc.Call("moveTo", duration, position)}}}}
-}
-
-func (m *moveTo) InitWithDurationAndDeltaPosition(duration float64, position Point) bool {
-	return m.Call("initWithDuration", duration, position).Bool()
 }
 
 func (m *moveTo) Clone() Action {
@@ -367,7 +332,6 @@ func (m *moveTo) Reverse() FiniteTimeAction {
 
 type ScaleTo interface {
 	ActionInterval
-	InitWithDurationAndScale(float64, float64, float64) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -378,10 +342,6 @@ type scaleTo struct{ actionInterval }
 
 func NewScaleTo(duration float64, sx float64, sy float64) ScaleTo {
 	return &scaleTo{actionInterval{finiteTimeAction{action{pcc.Call("scaleTo", duration, sx, sy)}}}}
-}
-
-func (s *scaleTo) InitWithDurationAndScale(duration float64, sx float64, sy float64) bool {
-	return s.Call("initWithDuration", duration, sx, sy).Bool()
 }
 
 func (s *scaleTo) Clone() Action {
@@ -406,7 +366,6 @@ func (s *scaleTo) Reverse() FiniteTimeAction {
 
 type ScaleBy interface {
 	ActionInterval
-	InitWithDurationAndScale(float64, float64, float64) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -417,10 +376,6 @@ type scaleBy struct{ actionInterval }
 
 func NewScaleBy(duration float64, sx float64, sy float64) ScaleBy {
 	return &scaleBy{actionInterval{finiteTimeAction{action{pcc.Call("scaleBy", duration, sx, sy)}}}}
-}
-
-func (s *scaleBy) InitWithDurationAndScale(duration float64, sx float64, sy float64) bool {
-	return s.Call("initWithDuration", duration, sx, sy).Bool()
 }
 
 func (s *scaleBy) Clone() Action {
@@ -461,7 +416,6 @@ func (s *scaleBy) Reverse() FiniteTimeAction {
 
 type TintTo interface {
 	ActionInterval
-	InitWithDurationAndColor(float64, int, int, int) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -472,10 +426,6 @@ type tintTo struct{ actionInterval }
 
 func NewTintTo(duration float64, red int, green int, blue int) TintTo {
 	return &tintTo{actionInterval{finiteTimeAction{action{pcc.Call("tintTo", duration, red, green, blue)}}}}
-}
-
-func (t *tintTo) InitWithDurationAndColor(duration float64, red int, green int, blue int) bool {
-	return t.Call("initWithDuration", duration, red, green, blue).Bool()
 }
 
 func (t *tintTo) Clone() Action {
@@ -500,7 +450,6 @@ func (t *tintTo) Reverse() FiniteTimeAction {
 
 type TintBy interface {
 	ActionInterval
-	InitWithDurationAndColor(float64, int, int, int) bool
 	//Clone() Action defined as part of Action
 	//StartWithTarget(Node) defined as part of Action
 	//Update(float64) defined as part of Action
@@ -511,10 +460,6 @@ type tintBy struct{ actionInterval }
 
 func NewTintBy(duration float64, red int, green int, blue int) TintBy {
 	return &tintBy{actionInterval{finiteTimeAction{action{pcc.Call("tintBy", duration, red, green, blue)}}}}
-}
-
-func (t *tintBy) InitWithDurationAndColor(duration float64, red int, green int, blue int) bool {
-	return t.Call("initWithDuration", duration, red, green, blue).Bool()
 }
 
 func (t *tintBy) Clone() Action {

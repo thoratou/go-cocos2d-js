@@ -25,7 +25,6 @@ type SpriteFrame interface {
 	Clone() SpriteFrame
 	CopyWithZone() SpriteFrame
 	Copy() SpriteFrame
-	InitWithTexture(Texture2D, Rect, bool, Point, Size) bool
 }
 
 type spriteFrame struct{ *js.Object }
@@ -112,8 +111,4 @@ func (s *spriteFrame) CopyWithZone() SpriteFrame {
 
 func (s *spriteFrame) Copy() SpriteFrame {
 	return &spriteFrame{s.Call("copy")}
-}
-
-func (s *spriteFrame) InitWithTexture(texture Texture2D, rect Rect, rotated bool, offset Point, originalSize Size) bool {
-	return s.Call("initWithTexture", texture, rect, rotated, offset, originalSize).Bool()
 }

@@ -11,7 +11,6 @@ type MenuItem interface {
 	//IsOpacityModifyRGB() bool defined as part of Node
 	IsEnabled() bool
 	SetEnabled(bool)
-	InitWithCallback(func(), Node) bool
 	Rect() Rect
 	Selected()
 	Unselected()
@@ -21,7 +20,7 @@ type MenuItem interface {
 
 type menuItem struct{ node }
 
-func NewMenuItem(callback func(...interface{}), target Node) MenuItem {
+func NewMenuItem(callback func(), target Node) MenuItem {
 	return &menuItem{node{pcc.Get("MenuItem").New(callback, target)}}
 }
 
@@ -43,10 +42,6 @@ func (mi *menuItem) IsEnabled() bool {
 
 func (mi *menuItem) SetEnabled(enable bool) {
 	mi.Call("setEnabled", enable)
-}
-
-func (mi *menuItem) InitWithCallback(callback func(), target Node) bool {
-	return mi.Call("initWithCallback", callback, target).Bool()
 }
 
 func (mi *menuItem) Rect() Rect {
@@ -84,7 +79,6 @@ type MenuItemLabel interface {
 	//SetOpacity(int) defined as part of Node
 	//GetColor() Color defined as part of Node
 	//SetColor(Color) defined as part of Node
-	//initWithLabel
 	SetString(string)
 	GetString() string
 	//Activate() defined as part of Node
@@ -94,8 +88,12 @@ type MenuItemLabel interface {
 
 type menuItemLabel struct{ menuItem }
 
-func NewMenuItemLabel(label Node, selector func(), target Node) MenuItemLabel {
+func NewMenuItemLabelAllArgs(label Node, selector func(), target Node) MenuItemLabel {
 	return &menuItemLabel{menuItem{node{pcc.Get("MenuItemLabel").New(label, selector, target)}}}
+}
+
+func NewMenuItemLabel(args ...interface{}) MenuItemLabel {
+	return &menuItemLabel{menuItem{node{pcc.Get("MenuItemLabel").New(args...)}}}
 }
 
 func (m *menuItemLabel) GetDisabledColor() Color {
@@ -160,7 +158,6 @@ func (m *menuItemLabel) Unselected() {
 
 type MenuItemAtlasFont interface {
 	MenuItemLabel
-	//initWithString
 }
 
 type menuItemAtlasFont struct{ menuItemLabel }
@@ -175,7 +172,6 @@ func NewMenuItemAtlasFont(value string, charMapFile string, itemWidth float64, i
 
 type MenuItemFont interface {
 	MenuItemLabel
-	//initWithString
 	SetFontSize(int)
 	GetFontSize() int
 	SetFontName(string)
@@ -184,12 +180,16 @@ type MenuItemFont interface {
 
 type menuItemFont struct{ menuItemLabel }
 
-func NewMenuItemFont(value string, callback func(), target Node) MenuItemFont {
+func NewMenuItemFontAllArgs(value string, callback func(), target Node) MenuItemFont {
 	return &menuItemFont{menuItemLabel{menuItem{node{pcc.Get("MenuItemFont").New(value, callback, target)}}}}
 }
 
 func NewMenuItemFontWithString(value string) MenuItemFont {
 	return &menuItemFont{menuItemLabel{menuItem{node{pcc.Get("MenuItemFont").New(value)}}}}
+}
+
+func NewMenuItemFont(args ...interface{}) MenuItemFont {
+	return &menuItemFont{menuItemLabel{menuItem{node{pcc.Get("MenuItemFont").New(args...)}}}}
 }
 
 func (m *menuItemFont) SetFontSize(s int) {
@@ -237,8 +237,12 @@ type menuItemSprite struct{ menuItem }
 // {Image|Null} disabled state image
 // {function|Null} callback
 // {cc.Node|Null} target Node
-func NewMenuItemSprite(normalImage *string, selectedImage *string, disabledImage *string, callback *func(), target Node) MenuItemSprite {
+func NewMenuItemSpriteAllArgs(normalImage *string, selectedImage *string, disabledImage *string, callback *func(), target Node) MenuItemSprite {
 	return &menuItemSprite{menuItem{node{pcc.Get("MenuItemSprite").New(normalImage, selectedImage, disabledImage, callback, target)}}}
+}
+
+func NewMenuItemSprite(args ...interface{}) MenuItemSprite {
+	return &menuItemSprite{menuItem{node{pcc.Get("MenuItemSprite").New(args...)}}}
 }
 
 func (m *menuItemSprite) GetNormalImage() Sprite {
@@ -312,8 +316,12 @@ type menuItemImage struct{ menuItemSprite }
 // {Image|Null} disabled state image
 // {function|Null} callback
 // {cc.Node|Null} target Node
-func NewMenuItemImage(normalImage *string, selectedImage *string, disabledImage *string, callback *func(), target Node) MenuItemImage {
+func NewMenuItemImageAllArgs(normalImage *string, selectedImage *string, disabledImage *string, callback *func(), target Node) MenuItemImage {
 	return &menuItemImage{menuItemSprite{menuItem{node{pcc.Get("MenuItemImage").New(normalImage, selectedImage, disabledImage, callback, target)}}}}
+}
+
+func NewMenuItemImage(args ...interface{}) MenuItemImage {
+	return &menuItemImage{menuItemSprite{menuItem{node{pcc.Get("MenuItemImage").New(args...)}}}}
 }
 
 func (m *menuItemImage) SetNormalSpriteFrame(frame SpriteFrame) {
@@ -342,7 +350,6 @@ type MenuItemToggle interface {
 	SetSelectedIndex(int)
 	GetSubItems() []MenuItem
 	SetSubItems([]MenuItem)
-	//initWithItems
 	AddSubItem(MenuItem)
 	//Activate() defined as part of Node
 	//Selected() defined as part of Node
