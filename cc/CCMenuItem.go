@@ -14,13 +14,13 @@ type MenuItem interface {
 	Rect() Rect
 	Selected()
 	Unselected()
-	SetCallback(func(), Node)
+	SetCallback(func(Node), Node)
 	Activate()
 }
 
 type menuItem struct{ node }
 
-func NewMenuItem(callback func(), target Node) MenuItem {
+func NewMenuItem(callback func(Node), target Node) MenuItem {
 	return &menuItem{node{pcc.Get("MenuItem").New(callback, target)}}
 }
 
@@ -56,7 +56,7 @@ func (mi *menuItem) Unselected() {
 	mi.Call("unselected")
 }
 
-func (mi *menuItem) SetCallback(callback func(), target Node) {
+func (mi *menuItem) SetCallback(callback func(Node), target Node) {
 	mi.Call("setCallback", callback, target)
 }
 
