@@ -1,5 +1,9 @@
 package cc
 
+import (
+	"github.com/gopherjs/gopherjs/js"
+)
+
 //////////////
 // MenuItem //
 //////////////
@@ -14,13 +18,13 @@ type MenuItem interface {
 	Rect() Rect
 	Selected()
 	Unselected()
-	SetCallback(func(Node), Node)
+	SetCallback(func(*js.Object), Node)
 	Activate()
 }
 
 type menuItem struct{ node }
 
-func NewMenuItem(callback func(Node), target Node) MenuItem {
+func NewMenuItem(callback func(*js.Object), target Node) MenuItem {
 	return &menuItem{node{pcc.Get("MenuItem").New(callback, target)}}
 }
 
@@ -56,7 +60,7 @@ func (mi *menuItem) Unselected() {
 	mi.Call("unselected")
 }
 
-func (mi *menuItem) SetCallback(callback func(Node), target Node) {
+func (mi *menuItem) SetCallback(callback func(*js.Object), target Node) {
 	mi.Call("setCallback", callback, target)
 }
 
@@ -88,7 +92,7 @@ type MenuItemLabel interface {
 
 type menuItemLabel struct{ menuItem }
 
-func NewMenuItemLabelAllArgs(label Node, selector func(), target Node) MenuItemLabel {
+func NewMenuItemLabelAllArgs(label Node, selector func(*js.Object), target Node) MenuItemLabel {
 	return &menuItemLabel{menuItem{node{pcc.Get("MenuItemLabel").New(label, selector, target)}}}
 }
 
@@ -180,7 +184,7 @@ type MenuItemFont interface {
 
 type menuItemFont struct{ menuItemLabel }
 
-func NewMenuItemFontAllArgs(value string, callback func(), target Node) MenuItemFont {
+func NewMenuItemFontAllArgs(value string, callback func(*js.Object), target Node) MenuItemFont {
 	return &menuItemFont{menuItemLabel{menuItem{node{pcc.Get("MenuItemFont").New(value, callback, target)}}}}
 }
 
@@ -237,7 +241,7 @@ type menuItemSprite struct{ menuItem }
 // {Image|Null} disabled state image
 // {function|Null} callback
 // {cc.Node|Null} target Node
-func NewMenuItemSpriteAllArgs(normalImage *string, selectedImage *string, disabledImage *string, callback *func(), target Node) MenuItemSprite {
+func NewMenuItemSpriteAllArgs(normalImage *string, selectedImage *string, disabledImage *string, callback *func(*js.Object), target Node) MenuItemSprite {
 	return &menuItemSprite{menuItem{node{pcc.Get("MenuItemSprite").New(normalImage, selectedImage, disabledImage, callback, target)}}}
 }
 
@@ -316,7 +320,7 @@ type menuItemImage struct{ menuItemSprite }
 // {Image|Null} disabled state image
 // {function|Null} callback
 // {cc.Node|Null} target Node
-func NewMenuItemImageAllArgs(normalImage *string, selectedImage *string, disabledImage *string, callback *func(), target Node) MenuItemImage {
+func NewMenuItemImageAllArgs(normalImage *string, selectedImage *string, disabledImage *string, callback *func(*js.Object), target Node) MenuItemImage {
 	return &menuItemImage{menuItemSprite{menuItem{node{pcc.Get("MenuItemImage").New(normalImage, selectedImage, disabledImage, callback, target)}}}}
 }
 
