@@ -7,7 +7,7 @@ import "github.com/gopherjs/gopherjs/js"
 ///////////////
 
 type SAXParser interface {
-	Parse(string) interface{}
+	Parse(string) *js.Object
 }
 
 type saxParser struct{ *js.Object }
@@ -16,8 +16,8 @@ func NewSAXPaser() SAXParser {
 	return &saxParser{pcc.Get("SAXParser").New()}
 }
 
-func (s *saxParser) Parse(xmlTxt string) interface{} {
-	return s.Call("parse", xmlTxt).Interface()
+func (s *saxParser) Parse(xmlTxt string) *js.Object {
+	return s.Call("parse", xmlTxt)
 }
 
 /////////////////
@@ -30,6 +30,6 @@ type PlistParser interface {
 
 type plistParser struct{ saxParser }
 
-func (p *plistParser) Parse(xmlTxt string) interface{} {
-	return p.Call("parse", xmlTxt).Interface()
+func (p *plistParser) Parse(xmlTxt string) *js.Object {
+	return p.Call("parse", xmlTxt)
 }

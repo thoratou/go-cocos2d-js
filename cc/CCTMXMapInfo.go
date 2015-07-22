@@ -23,8 +23,8 @@ const (
 //////////////////
 
 type TMXLayerInfo interface {
-	GetProperties() []interface{}
-	SetProperties([]interface{})
+	GetProperties() []*js.Object
+	SetProperties([]*js.Object)
 }
 
 type tmxLayerInfo struct{ *js.Object }
@@ -33,17 +33,17 @@ func NewTMXLayerInfo() TMXLayerInfo {
 	return &tmxLayerInfo{pcc.Get("TMXLayerInfo").New()}
 }
 
-func (t *tmxLayerInfo) GetProperties() []interface{} {
+func (t *tmxLayerInfo) GetProperties() []*js.Object {
 	properties := t.Call("getProperties")
 	length := properties.Length()
-	out := make([]interface{}, length, length)
+	out := make([]*js.Object, length, length)
 	for i := 0; i < length; i++ {
 		out[i] = properties.Index(i)
 	}
 	return out
 }
 
-func (t *tmxLayerInfo) SetProperties(properties []interface{}) {
+func (t *tmxLayerInfo) SetProperties(properties []*js.Object) {
 	t.Call("setProperties", properties)
 }
 
@@ -84,20 +84,20 @@ type TMXMapInfo interface {
 	//TODO: TMXObjectGroup
 	//GetObjectGroups() []TMXObjectGroup
 	//SetObjectGroups(TMXObjectGroup)
-	GetParentElement() interface{}
-	SetParentElement(interface{})
+	GetParentElement() *js.Object
+	SetParentElement(*js.Object)
 	GetParentGID() int
 	SetParentGID(int)
-	GetLayerAttribs() interface{}
-	SetLayerAttribs(interface{})
+	GetLayerAttribs() *js.Object
+	SetLayerAttribs(*js.Object)
 	GetStoringCharacters() bool
 	SetStoringCharacters(bool)
-	GetProperties() []interface{}
-	SetProperties([]interface{})
-	ParseXMLFile(string, bool) interface{}
+	GetProperties() []*js.Object
+	SetProperties([]*js.Object)
+	ParseXMLFile(string, bool) *js.Object
 	ParseXMLString(string) bool
-	GetTileProperties() []interface{}
-	SetTileProperties(interface{})
+	GetTileProperties() []*js.Object
+	SetTileProperties(*js.Object)
 	GetCurrentString() string
 	SetCurrentString(string)
 	GetTMXFileName() string
@@ -170,11 +170,11 @@ func (t *tmxMapInfo) SetTilesets(value TMXTilesetInfo) {
 	t.Call("setTilesets", value)
 }
 
-func (t *tmxMapInfo) GetParentElement() interface{} {
+func (t *tmxMapInfo) GetParentElement() *js.Object {
 	return t.Call("getParentElement")
 }
 
-func (t *tmxMapInfo) SetParentElement(value interface{}) {
+func (t *tmxMapInfo) SetParentElement(value *js.Object) {
 	t.Call("setParentElement", value)
 }
 
@@ -186,11 +186,11 @@ func (t *tmxMapInfo) SetParentGID(value int) {
 	t.Call("setParentGID", value)
 }
 
-func (t *tmxMapInfo) GetLayerAttribs() interface{} {
+func (t *tmxMapInfo) GetLayerAttribs() *js.Object {
 	return t.Call("getLayerAttribs")
 }
 
-func (t *tmxMapInfo) SetLayerAttribs(value interface{}) {
+func (t *tmxMapInfo) SetLayerAttribs(value *js.Object) {
 	t.Call("setLayerAttribs", value)
 }
 
@@ -202,21 +202,21 @@ func (t *tmxMapInfo) SetStoringCharacters(value bool) {
 	t.Call("setStoringCharacters", value)
 }
 
-func (t *tmxMapInfo) GetProperties() []interface{} {
+func (t *tmxMapInfo) GetProperties() []*js.Object {
 	properties := t.Call("getProperties")
 	length := properties.Length()
-	out := make([]interface{}, length, length)
+	out := make([]*js.Object, length, length)
 	for i := 0; i < length; i++ {
 		out[i] = properties.Index(i)
 	}
 	return out
 }
 
-func (t *tmxMapInfo) SetProperties(value []interface{}) {
+func (t *tmxMapInfo) SetProperties(value []*js.Object) {
 	t.Call("setProperties", value)
 }
 
-func (t *tmxMapInfo) ParseXMLFile(tmxFile string, isXmlString bool) interface{} {
+func (t *tmxMapInfo) ParseXMLFile(tmxFile string, isXmlString bool) *js.Object {
 	return t.Call("parseXMLFile", tmxFile, isXmlString)
 }
 
@@ -224,17 +224,17 @@ func (t *tmxMapInfo) ParseXMLString(xmlString string) bool {
 	return t.Call("parseXMLString", xmlString).Bool()
 }
 
-func (t *tmxMapInfo) GetTileProperties() []interface{} {
+func (t *tmxMapInfo) GetTileProperties() []*js.Object {
 	properties := t.Call("getTileProperties")
 	length := properties.Length()
-	out := make([]interface{}, length, length)
+	out := make([]*js.Object, length, length)
 	for i := 0; i < length; i++ {
 		out[i] = properties.Index(i)
 	}
 	return out
 }
 
-func (t *tmxMapInfo) SetTileProperties(tileProperties interface{}) {
+func (t *tmxMapInfo) SetTileProperties(tileProperties *js.Object) {
 	t.Call("setTileProperties", tileProperties)
 }
 

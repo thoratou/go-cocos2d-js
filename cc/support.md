@@ -86,9 +86,9 @@ Based-file support:
 |cocos2d/text-input/CCTextFieldTTF.js                 | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/tilemap/CCTGAlib.js                          | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/tilemap/CCTMXLayer.js                        | <span style="color:#00AADD">not yet</span> |                                   |
-|cocos2d/tilemap/CCTMXObjectGroup.js                  | <span style="color:#00AADD">not yet</span> |                                   |
+|cocos2d/tilemap/CCTMXObjectGroup.js                  | <span style="color:#DDAA00">full</span>    |                                   |
 |cocos2d/tilemap/CCTMXTiledMap.js                     | <span style="color:#00AADD">not yet</span> |                                   |
-|cocos2d/tilemap/CCTMXXMLParser.js                    | <span style="color:#00AADD">not yet</span> |                                   |
+|cocos2d/tilemap/CCTMXXMLParser.js                    | <span style="color:#DDAA00">full</span>    |                             		   |
 |cocos2d/transitions/CCTransition.js                  | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/transitions/CCTransitionPageTurn.js          | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/transitions/CCTransitionProgress.js          | <span style="color:#00AADD">not yet</span> |                                   |
