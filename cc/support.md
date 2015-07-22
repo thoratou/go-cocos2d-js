@@ -39,11 +39,11 @@ Based-file support:
 |cocos2d/core/platform/CCClass.js                     | <span style="color:#CC0000">no</span>      | emulates this._super(), no CCClass no go side |
 |cocos2d/core/platform/CCCommon.js                    | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/core/platform/CCConfig.js                    | <span style="color:#00AADD">not yet</span> |                                   |
-|cocos2d/core/platform/CCEGLView.js                   | <span style="color:#00CC00">full</span>    |                                   |
 |cocos2d/core/platform/CCInputExtension.js            | <span style="color:#00AADD">not yet</span> |                                   |
+|cocos2d/core/platform/CCEGLView.js                   | <span style="color:#00CC00">full</span>    |                                   |
 |cocos2d/core/platform/CCInputManager.js              | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/core/platform/CCMacro.js                     | <span style="color:#00AADD">not yet</span> |                                   |
-|cocos2d/core/platform/CCSAXParser.js                 | <span style="color:#00AADD">not yet</span> |                                   |
+|cocos2d/core/platform/CCSAXParser.js                 | <span style="color:#00CC00">full</span>    | Returns DOM as interface{} for now |
 |cocos2d/core/platform/CCScreen.js                    | <span style="color:#00AADD">not yet</span> |                                   |
 |cocos2d/core/platform/CCTypes.js                     | <span style="color:#00CC00">full</span>    |                                   |
 |cocos2d/core/platform/CCVisibleRect.js               | <span style="color:#00AADD">not yet</span> |                                   |
