@@ -9,7 +9,7 @@ type SpriteBatchNode interface {
 	AddSpriteWithoutQuad(Sprite, int, int) SpriteBatchNode
 	GetTextureAtlas() TextureAtlas
 	SetTextureAtlas(TextureAtlas)
-	GetDescendants() []SpriteBatchNode
+	GetDescendants() []Sprite
 	IncreaseAtlasCapacity()
 	RemoveChildAtIndex(int, bool)
 	RebuildIndexInOrder(Sprite, int) int
@@ -58,12 +58,12 @@ func (s *spriteBatchNode) SetTextureAtlas(textureAtlas TextureAtlas) {
 	s.Call("setTextureAtlas", textureAtlas)
 }
 
-func (s *spriteBatchNode) GetDescendants() []SpriteBatchNode {
+func (s *spriteBatchNode) GetDescendants() []Sprite {
 	descendants := s.Call("getDescendants")
 	length := descendants.Length()
-	out := make([]SpriteBatchNode, length, length)
+	out := make([]Sprite, length, length)
 	for i := 0; i < length; i++ {
-		out[i] = &spriteBatchNode{node{descendants.Index(i)}}
+		out[i] = &sprite{node{descendants.Index(i)}}
 	}
 	return out
 }
